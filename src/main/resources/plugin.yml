@@ -1,0 +1,116 @@
+name: EssentialCommands
+version: '${version}'
+main: me.notro.essentialcommands.EssentialCommands
+api-version: 1.19
+authors: [ Notro ]
+description: General commands in Minecraft
+
+commands:
+
+  heal:
+    description: 'Set full health to a player.'
+
+  feed:
+    description: 'Set full food level to a player.'
+
+  god:
+    description: 'Set player to invincible.'
+
+  vanish:
+    description: 'Set player to invisible.'
+
+  clear:
+    description: 'Clears Inventory.'
+
+  give:
+    description: 'Give an item to a player.'
+
+  teleport:
+    description: 'Teleports to a player.'
+    aliases: tp
+
+  setSpawn:
+    description: 'Set world spawn.'
+
+  spawn:
+    description: 'Teleports to the spawn.'
+
+  fly:
+    description: 'Set flight to a player.'
+
+  time:
+    description: 'Set world time.'
+
+  freeze:
+    description: 'Freeze/Unfreeze a player.'
+
+  gamemode:
+    description: 'Set a certain game mode to a player.'
+    aliases: gm
+
+  weather:
+    description: 'Set server weather'
+
+  kit:
+    description: 'Set a kit for a player'
+
+  push:
+    description: 'Push a player to a certain distance.'
+
+  speed:
+    description: 'Set a player flight speed.'
+
+  enchant:
+    description: 'Set an enchantment to a certain item.'
+
+  staffchat:
+    description: 'Send a message to the staff members only.'
+    aliases: sc
+
+  build:
+    description: 'Change build mode to a player'
+
+  tpall:
+    description: 'Teleports all players online.'
+
+  killall:
+    description: 'Kill all the players.'
+
+  wear:
+    description: 'Wear a certain item.'
+    aliases: equip
+
+  kick:
+    description: 'Kick a player from the server.'
+
+  effect:
+    description: 'Give a player certain effect.'
+
+  ban:
+    description: 'Ban a player.'
+    aliases: b
+
+  unban:
+    description: 'Unban a player.'
+
+  ping:
+    description: 'Display your ping.'
+
+  nuke:
+    description: 'Nuke a player.'
+
+  mute:
+    description: 'Mute a player.'
+    aliases: m
+
+  unmute:
+    description: 'Ubmute a player.'
+
+  whitelist:
+    description: 'Whitelist a player/server.'
+
+  mutechat:
+    description: 'Mute the chat.'
+
+  msg:
+    description: 'Message a player.'

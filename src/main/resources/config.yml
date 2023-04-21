@@ -1,0 +1,12 @@
+system:
+
+launch-pad:
+  pad:
+    enabled: true
+    velocity-strength: 1
+
+sound:
+  commands:
+    allowed: BLOCK_NOTE_BLOCK_PLING
+    rejected: BLOCK_NOTE_BLOCK_BASS
+    launch-pad: ENTITY_EGG_THROW
