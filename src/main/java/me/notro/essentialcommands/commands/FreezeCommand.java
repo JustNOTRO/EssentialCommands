@@ -1,6 +1,7 @@
 package me.notro.essentialcommands.commands;
 
 import me.notro.essentialcommands.EssentialCommands;
+import me.notro.essentialcommands.systems.FreezeMode;
 import me.notro.essentialcommands.utils.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
@@ -41,13 +42,13 @@ public class FreezeCommand implements CommandExecutor {
             return false;
         }
 
-        if (!EssentialCommands.Freeze.getFreezedPlayers().contains(player.getUniqueId())) {
-            EssentialCommands.Freeze.getFreezedPlayers().add(player.getUniqueId());
+        if (!FreezeMode.freezedPlayers.contains(player.getUniqueId())) {
+            FreezeMode.freezedPlayers.add(player.getUniqueId());
             player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")), 1, 1);
             player.sendMessage(Message.fixColor("&7(Silent) &b" + target.getName() + " &7has been freezed by &b" + player.getName() + "&7."));
             return true;
         }
-        EssentialCommands.Freeze.getFreezedPlayers().remove(player.getUniqueId());
+        FreezeMode.freezedPlayers.remove(player.getUniqueId());
         player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")), 1, 1);
         player.sendMessage(Message.fixColor("&7(Silent) &b" + target.getName() + " &7has been unfreezed by &b" + player.getName() + "&7."));
         return true;

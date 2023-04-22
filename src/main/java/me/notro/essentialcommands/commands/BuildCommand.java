@@ -1,6 +1,7 @@
 package me.notro.essentialcommands.commands;
 
 import me.notro.essentialcommands.EssentialCommands;
+import me.notro.essentialcommands.systems.BuildMode;
 import me.notro.essentialcommands.utils.Message;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
@@ -45,12 +46,12 @@ public class BuildCommand implements CommandExecutor, TabCompleter {
         switch (args[0].toLowerCase()) {
 
             case "enable" -> {
-                EssentialCommands.Build.getPlayersBuilding().remove(player.getUniqueId());
+                BuildMode.playersBuilding.remove(player.getUniqueId());
                 player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("allowed")), 1, 1);
                 player.sendMessage(Message.fixColor("&7(Silent) &bbuild has been &3enabled&7."));
             }
             case "disable" -> {
-                EssentialCommands.Build.getPlayersBuilding().add(player.getUniqueId());
+                BuildMode.playersBuilding.add(player.getUniqueId());
                 player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("allowed")), 1, 1);
                 player.sendMessage(Message.fixColor("&7(Silent) &bbuild has been &3disabled&7."));
             }

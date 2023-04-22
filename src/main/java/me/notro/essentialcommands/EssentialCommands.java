@@ -6,15 +6,10 @@ import me.notro.essentialcommands.listeners.*;
 import lombok.Getter;
 import me.notro.essentialcommands.commands.*;
 import me.notro.essentialcommands.utils.Config;
+import me.notro.essentialcommands.utils.Message;
 import org.bukkit.Bukkit;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 
 public final class EssentialCommands extends JavaPlugin {
 
@@ -27,13 +22,14 @@ public final class EssentialCommands extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        // Plugin startup logic
         instance = this;
 
         getConfig().options().copyDefaults();
         saveDefaultConfig();
 
-        Bukkit.getConsoleSender().sendMessage("§7[§b§lEssential Commands §7] §8>> §7is §aOnline.");
+        // Plugin startup logic
+        Bukkit.getConsoleSender().sendMessage(Message.fixColor("&7[&b&lEssential Commands &7] &8>> &7is &aOnline."));
+
         //Spigot Commands
         Bukkit.getPluginCommand("heal").setExecutor(new HealCommand());
         Bukkit.getPluginCommand("feed").setExecutor(new FeedCommand());
@@ -88,32 +84,7 @@ public final class EssentialCommands extends JavaPlugin {
     @Override
     public void onDisable() {
         // Plugin shutdown logic
-        Bukkit.getConsoleSender().sendMessage("§7[§b§lEssential Commands §7] §8>> §7is §cOffline.");
-    }
-
-    public static class GodMode {
-        @Getter
-        private static final List<UUID> godModePlayers = new ArrayList<>();
-    }
-
-    public static class Vanish {
-        @Getter
-        private static final List<UUID> vanishedPlayers = new ArrayList<>();
-    }
-
-    public static class Freeze {
-        @Getter
-        private static final List<UUID> freezedPlayers = new ArrayList<>();
-    }
-
-    public static class Build {
-        @Getter
-        private static final List<UUID> playersBuilding = new ArrayList<>();
-    }
-
-    public static class Mutechat {
-        @Getter
-        private static final List<UUID> muteChatAffectedPlayers = new ArrayList<>();
+        Bukkit.getConsoleSender().sendMessage(Message.fixColor("&7[&b&lEssential Commands &7] &8>> &7is &cOffline."));
     }
 
     public static class MetadataValues {

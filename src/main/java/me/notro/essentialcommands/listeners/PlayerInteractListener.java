@@ -1,6 +1,7 @@
 package me.notro.essentialcommands.listeners;
 
 import me.notro.essentialcommands.EssentialCommands;
+import me.notro.essentialcommands.systems.BuildMode;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.configuration.ConfigurationSection;
@@ -34,6 +35,6 @@ public class PlayerInteractListener implements Listener {
         ConfigurationSection soundSection = EssentialCommands.getInstance().getConfig().getConfigurationSection("sound.commands");
         Player player = event.getPlayer();
 
-        if (EssentialCommands.Build.getPlayersBuilding().contains(player.getUniqueId())) event.setCancelled(true);
+        if (BuildMode.playersBuilding.contains(player.getUniqueId())) event.setCancelled(true);
     }
 }

@@ -1,6 +1,7 @@
 package me.notro.essentialcommands.commands;
 
 import me.notro.essentialcommands.EssentialCommands;
+import me.notro.essentialcommands.systems.GodMode;
 import me.notro.essentialcommands.utils.Message;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
@@ -26,14 +27,14 @@ public class GodCommand implements CommandExecutor {
             return false;
         }
 
-        if (!EssentialCommands.GodMode.getGodModePlayers().contains(player.getUniqueId())) {
-            EssentialCommands.GodMode.getGodModePlayers().add(player.getUniqueId());
+        if (!GodMode.godModePlayers.contains(player.getUniqueId())) {
+            GodMode.godModePlayers.add(player.getUniqueId());
             player.setInvulnerable(true);
             player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("allowed")), 1, 1);
             player.sendMessage(Message.fixColor("&7[&b&lEssential Commands&7] &8>> &bGod mode is now &aOn&b."));
             return true;
         }
-        EssentialCommands.GodMode.getGodModePlayers().remove(player.getUniqueId());
+        GodMode.godModePlayers.remove(player.getUniqueId());
         player.setInvulnerable(false);
         player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("allowed")), 1, 1);
         player.sendMessage(Message.fixColor("&7[&b&lEssential Commands&7] &8>> &bGod mode is now &cOff&b."));

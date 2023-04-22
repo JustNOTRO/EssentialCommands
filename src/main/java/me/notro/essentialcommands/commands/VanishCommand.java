@@ -1,6 +1,7 @@
 package me.notro.essentialcommands.commands;
 
 import me.notro.essentialcommands.EssentialCommands;
+import me.notro.essentialcommands.systems.VanishMode;
 import me.notro.essentialcommands.utils.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
@@ -28,9 +29,9 @@ public class VanishCommand implements CommandExecutor {
             return false;
         }
 
-        if (!EssentialCommands.Vanish.getVanishedPlayers().contains(player.getUniqueId())) {
+        if (!VanishMode.vanishedPlayers.contains(player.getUniqueId())) {
             Bukkit.getOnlinePlayers().forEach(player1 -> {
-                EssentialCommands.Vanish.getVanishedPlayers().add(player.getUniqueId());
+                VanishMode.vanishedPlayers.add(player.getUniqueId());
                 player.hidePlayer(player1);
                 player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("allowed")), 1, 1);
                 player.sendMessage(Message.fixColor("&7[&b&lEssential Commands&7] &8>> &bYou are now &3invisible &bto all players."));
@@ -38,7 +39,7 @@ public class VanishCommand implements CommandExecutor {
             return true;
         }
         Bukkit.getOnlinePlayers().forEach(player1 -> {
-            EssentialCommands.Vanish.getVanishedPlayers().remove(player.getUniqueId());
+            VanishMode.vanishedPlayers.remove(player.getUniqueId());
             player.showPlayer(player1);
             player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("allowed")), 1, 1);
             player.sendMessage(Message.fixColor("&7[&b&lEssential Commands&7] &8>> &bYou are now &3visible &bto all players."));

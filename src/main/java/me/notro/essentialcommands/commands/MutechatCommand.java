@@ -1,6 +1,7 @@
 package me.notro.essentialcommands.commands;
 
 import me.notro.essentialcommands.EssentialCommands;
+import me.notro.essentialcommands.systems.MuteChat;
 import me.notro.essentialcommands.utils.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
@@ -27,12 +28,12 @@ public class MutechatCommand implements CommandExecutor {
             return false;
         }
 
-        if (!EssentialCommands.Mutechat.getMuteChatAffectedPlayers().contains(player.getUniqueId())) {
-            EssentialCommands.Mutechat.getMuteChatAffectedPlayers().add(player.getUniqueId());
+        if (!MuteChat.muteChatAffectedPlayers.contains(player.getUniqueId())) {
+            MuteChat.muteChatAffectedPlayers.add(player.getUniqueId());
             Bukkit.broadcastMessage(Message.fixColor("&cChat has been silenced by &4" + player.getName()));
             return true;
         }
-        EssentialCommands.Mutechat.getMuteChatAffectedPlayers().remove(player.getUniqueId());
+        MuteChat.muteChatAffectedPlayers.remove(player.getUniqueId());
         Bukkit.broadcastMessage(Message.fixColor("&cChat has been unsilenced by &4" + player.getName()));
         return true;
     }

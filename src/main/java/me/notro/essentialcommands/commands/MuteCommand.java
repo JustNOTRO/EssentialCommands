@@ -56,8 +56,8 @@ public class MuteCommand implements CommandExecutor {
             rawReason = rawReason + args[i] + " ";
         }
         ConfigurationSection punishmentSection = config.createSection(target.getUniqueId().toString());
-        punishmentSection.set(ConfigFields.EXECUTOR, player.getUniqueId().toString());
-        punishmentSection.set(ConfigFields.REASON, rawReason);
+        punishmentSection.set(ConfigFields.EXECUTOR.getMessage(), player.getUniqueId().toString());
+        punishmentSection.set(ConfigFields.REASON.getMessage(), rawReason);
         String reason = Message.fixColor("&7[&b&lEssential Commands&7] &8>> &bMuted " + target.getName() + " for the reason: " + ConfigFields.REASON);
         String targetReason = Message.fixColor("&7[&b&lEssential Commands&7] &8>> &cYou have been muted for the reason: " + ConfigFields.REASON);
 

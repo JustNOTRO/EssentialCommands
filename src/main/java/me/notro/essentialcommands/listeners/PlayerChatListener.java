@@ -1,6 +1,7 @@
 package me.notro.essentialcommands.listeners;
 
 import me.notro.essentialcommands.EssentialCommands;
+import me.notro.essentialcommands.systems.MuteChat;
 import me.notro.essentialcommands.utils.Config;
 import me.notro.essentialcommands.utils.Message;
 import org.bukkit.configuration.ConfigurationSection;
@@ -26,6 +27,6 @@ public class PlayerChatListener implements Listener {
         Player player = event.getPlayer();
 
         if (player.hasPermission("essentials.mutechat.bypass")) return;
-        if (EssentialCommands.Mutechat.getMuteChatAffectedPlayers().contains(player.getUniqueId())) event.setCancelled(true);
+        if (MuteChat.muteChatAffectedPlayers.contains(player.getUniqueId())) event.setCancelled(true);
     }
 }
