@@ -44,7 +44,6 @@ public class NukeCommand implements CommandExecutor {
         }
         for (int i = 0; i < 10; i++)
             player.getWorld().spawnEntity(player.getLocation().add(0, 5, 0), EntityType.PRIMED_TNT).setMetadata("tntprimed", EssentialCommands.MetadataValues.blocksBreakMetaData(true));
-
         return true;
     }
 }

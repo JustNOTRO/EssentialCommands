@@ -25,9 +25,9 @@ public class SetSpawnCommand implements CommandExecutor {
             player.sendMessage(Message.fixColor(Message.NO_PERMISSION.getDefaultMessage()));
             return false;
         }
-        player.getWorld().setSpawnLocation(player.getLocation());
-        player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("allowed")), 1, 1);
-        player.sendMessage(Message.fixColor("&7[&b&lEssential Commands&7] &8>> &3Spawn &bhas been set."));
+        EssentialCommands.getInstance().getConfig().set("spawn", player.getLocation());
+        EssentialCommands.getInstance().saveConfig();
+        player.sendMessage(Message.fixColor("Spawn has been set!"));
         return true;
     }
 }

@@ -12,7 +12,6 @@ public class EntityDamageListener implements Listener {
     public void onPlayerGodMode(EntityDamageEvent event) {
 
         if (!(event.getEntity() instanceof Player player)) return;
-
         if (GodMode.godModePlayers.contains(player.getUniqueId())) event.setCancelled(true);
     }
 }

@@ -114,3 +114,6 @@ commands:
 
   msg:
     description: 'Message a player.'
+
+  particle:
+    description: 'Opens a particle gui.'

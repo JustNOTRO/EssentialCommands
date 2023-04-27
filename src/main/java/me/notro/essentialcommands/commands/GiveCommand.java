@@ -41,7 +41,7 @@ public class GiveCommand implements CommandExecutor, TabCompleter {
 
         if (args.length > 3 ) {
             player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-            player.sendMessage(Message.fixColor("&7[&b&lEssential Commands&7] &8>> &cUsage&3: &7/give <player> <item> <count>"));
+            player.sendMessage(Message.fixColor("&7(Silent) &8>> &cusage&7: &b/give <player> <item> <count>"));
             return false;
         }
 
@@ -58,20 +58,21 @@ public class GiveCommand implements CommandExecutor, TabCompleter {
 
         if (material == null) {
             player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-            player.sendMessage(Message.fixColor("&7[&b&lEssential Commands&7] &8>> &cMaterial does not exist."));
+            player.sendMessage(Message.fixColor("&7(Silent) &8>> &cmaterial does not exist&7."));
             return false;
         }
+
         ItemStack itemStack = new ItemStack(material);
+        itemStack.setAmount(itemAmount);
 
         if (itemStack.getAmount() == 0) {
             player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-            player.sendMessage(Message.fixColor("&7[&b&lEssential Commands&7] &8>> &cAmount needs to be at least 1."));
+            player.sendMessage(Message.fixColor("&7(Silent) &8>> &camount needs to be at least 1&7."));
             return false;
         }
-        itemStack.setAmount(itemAmount);
         target.getInventory().addItem(itemStack);
         player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("allowed")), 1, 1);
-        player.sendMessage(Message.fixColor("&7[&b&lEssential Commands&7] &8>> &bGave &b" + target.getName() + " &3" + itemStack.getType().toString().toLowerCase() + "&b."));
+        player.sendMessage(Message.fixColor("&7(Silent) &8>> &bgave &3" + target.getName() + " &b" + itemStack.getType().toString().toLowerCase() + "&7."));
         return true;
     }
 

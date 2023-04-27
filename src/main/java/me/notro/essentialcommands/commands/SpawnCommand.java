@@ -25,7 +25,8 @@ public class SpawnCommand implements CommandExecutor {
             player.sendMessage(Message.fixColor(Message.NO_PERMISSION.getDefaultMessage()));
             return false;
         }
-        player.teleport(player.getWorld().getSpawnLocation());
+        player.teleport(EssentialCommands.getInstance().getConfig().getLocation("spawn"));
+        EssentialCommands.getInstance().saveConfig();
         player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("allowed")), 1, 1);
         player.sendMessage(Message.fixColor("&7[&b&lEssential Commands&7] &8>> &bTeleported to the &3Spawn&b."));
         return true;

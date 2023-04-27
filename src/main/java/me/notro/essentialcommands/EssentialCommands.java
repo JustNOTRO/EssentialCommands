@@ -65,6 +65,7 @@ public final class EssentialCommands extends JavaPlugin {
         Bukkit.getPluginCommand("whitelist").setExecutor(new WhitelistCommand());
         Bukkit.getPluginCommand("mutechat").setExecutor(new MutechatCommand());
         Bukkit.getPluginCommand("msg").setExecutor(new MessageCommand());
+        Bukkit.getPluginCommand("particle").setExecutor(new ParticleGUICommand());
 
         setPunishmentsConfig(Config.getConfig("punishments"));
 
@@ -80,6 +81,8 @@ public final class EssentialCommands extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new PlayerChatListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerToggleFlightListener(), this);
         Bukkit.getPluginManager().registerEvents(new FoodLevelChangeListener(), this);
+        Bukkit.getPluginManager().registerEvents(new InventoryClickListener(), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerRespawnListener(), this);
     }
     @Override
     public void onDisable() {

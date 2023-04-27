@@ -4,7 +4,7 @@ import me.notro.essentialcommands.EssentialCommands;
 import me.notro.essentialcommands.utils.Message;
 import org.bukkit.BanList;
 import org.bukkit.Bukkit;
-import org.bukkit.Sound;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -18,44 +18,42 @@ public class BanCommand implements CommandExecutor {
         ConfigurationSection soundSection = EssentialCommands.getInstance().getConfig().getConfigurationSection("sound.commands");
         ConfigurationSection punishmentSection = EssentialCommands.getInstance().getConfig().getConfigurationSection("punishments.ban");
 
-        if (!(sender instanceof Player player)) {
-            sender.sendMessage(Message.fixColor(Message.NO_SENDER_EXECUTOR.getDefaultMessage()));
-            return false;
-        }
-
-        if (!player.hasPermission("essentials.ban")) {
-            player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-            player.sendMessage(Message.fixColor(Message.NO_PERMISSION.getDefaultMessage()));
+        if (!sender.hasPermission("essentials.ban")) {
+            sender.sendMessage(Message.fixColor(Message.NO_PERMISSION.getDefaultMessage()));
             return false;
         }
 
         if (args.length == 0) {
-            player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-            player.sendMessage(Message.fixColor(Message.NO_ARGUMENTS_PROVIDED.getDefaultMessage()));
+            sender.sendMessage(Message.fixColor(Message.NO_ARGUMENTS_PROVIDED.getDefaultMessage()));
             return false;
         }
 
         if (args.length < 2) {
-            player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-            player.sendMessage(Message.fixColor("&7(Silent) &cusage&7: &b/ban <player> <reason>"));
+            sender.sendMessage(Message.fixColor("&7(Silent) &cusage&7: &b/ban <player> <reason>"));
             return false;
         }
 
         Player target = Bukkit.getPlayer(args[0]);
+        OfflinePlayer offlineTarget = Bukkit.getOfflinePlayer(args[0]);
 
-        if (target == null) {
-            player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-            player.sendMessage(Message.fixColor(Message.NO_PLAYER_EXISTENCE.getDefaultMessage()));
-            return false;
-        }
-        String reason = "";
 
-        for (int i = 1; i < args.length; i++) {
-            reason = reason + args[i];
+        String reason = Message.fixColor("&cYou have been banned from this server for the reason: ");
+
+        for (int i = 1; i < args.length; i++)
+            reason = reason + args[i] + " ";
+
+        try {
+            sender.getServer().getBanList(BanList.Type.NAME).addBan(String.valueOf(offlineTarget.getUniqueId()), reason, null, null);
+            EssentialCommands.getInstance().saveConfig();
+        } catch (NullPointerException exception) {
+
         }
-        target.kickPlayer(Message.fixColor(reason));
-        player.getServer().getBanList(BanList.Type.NAME).addBan(String.valueOf(target), reason, null, null);
+
+        target.kickPlayer(reason);
+        sender.getServer().getBanList(BanList.Type.NAME).addBan(String.valueOf(target.getUniqueId()), reason, null, null);
         punishmentSection.set("reason", reason);
+        punishmentSection.set("players", target.getUniqueId().toString());
+        EssentialCommands.getInstance().saveConfig();
         return true;
     }
 }

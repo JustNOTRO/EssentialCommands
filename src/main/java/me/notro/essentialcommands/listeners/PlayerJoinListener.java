@@ -14,14 +14,17 @@ public class PlayerJoinListener implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        player.teleport(player.getWorld().getSpawnLocation());
-        player.setAllowFlight(true);
         event.setJoinMessage(Message.fixColor("&7[&a+&7] ") + player.getName());
+        player.teleport(EssentialCommands.getInstance().getConfig().getLocation("spawn"));
+        EssentialCommands.getInstance().saveConfig();
+        player.setAllowFlight(true);
     }
 
     @EventHandler
     public void onPlayerPunished(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         ConfigurationSection punishmentSection = EssentialCommands.getInstance().getConfig().getConfigurationSection("punishments.ban");
+
+        if (EssentialCommands.getInstance().getConfig().getStringList("players").contains(player.getUniqueId().toString())) player.kickPlayer(punishmentSection.getString("reason"));
     }
 }
