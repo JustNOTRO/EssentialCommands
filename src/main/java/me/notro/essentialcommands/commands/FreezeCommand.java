@@ -1,7 +1,6 @@
 package me.notro.essentialcommands.commands;
 
 import me.notro.essentialcommands.EssentialCommands;
-import me.notro.essentialcommands.systems.FreezeMode;
 import me.notro.essentialcommands.utils.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
@@ -11,10 +10,14 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class FreezeCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        ConfigurationSection freezeSection = EssentialCommands.getInstance().getConfig().getConfigurationSection("freeze");
         ConfigurationSection soundSection = EssentialCommands.getInstance().getConfig().getConfigurationSection("sound.commands");
 
         if (!(sender instanceof Player player)) {
@@ -42,15 +45,22 @@ public class FreezeCommand implements CommandExecutor {
             return false;
         }
 
-        if (!FreezeMode.freezedPlayers.contains(player.getUniqueId())) {
-            FreezeMode.freezedPlayers.add(player.getUniqueId());
+        List<String> freezedPlayers = freezeSection.getStringList("players-freezed");
+        if (freezedPlayers.isEmpty()) freezeSection.set("players-freezed", new ArrayList<>());
+
+        if (!freezeSection.getStringList("players-freezed").contains(target.getName())) {
+            freezedPlayers.add(target.getName());
+            freezeSection.set("players-freezed", freezedPlayers);
             player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-            player.sendMessage(Message.fixColor("&7(Silent) &b" + target.getName() + " &7has been freezed by &b" + player.getName() + "&7."));
+            player.sendMessage(Message.fixColor("&7(Silent) &3" + target.getName() + " &bhas been frozen by &3" + player.getName() + "&7."));
+            EssentialCommands.getInstance().saveConfig();
             return true;
         }
-        FreezeMode.freezedPlayers.remove(player.getUniqueId());
+        freezedPlayers.remove(target.getName());
+        freezeSection.set("players-freezed", freezedPlayers);
         player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-        player.sendMessage(Message.fixColor("&7(Silent) &b" + target.getName() + " &7has been unfreezed by &b" + player.getName() + "&7."));
+        player.sendMessage(Message.fixColor("&7(Silent) &3" + target.getName() + " &bhas been unfrozen by &3" + player.getName() + "&7."));
+        EssentialCommands.getInstance().saveConfig();
         return true;
     }
 }

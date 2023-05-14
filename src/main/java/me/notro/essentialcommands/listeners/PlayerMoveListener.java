@@ -1,7 +1,7 @@
 package me.notro.essentialcommands.listeners;
 
 import me.notro.essentialcommands.EssentialCommands;
-import me.notro.essentialcommands.systems.FreezeMode;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -12,6 +12,7 @@ public class PlayerMoveListener implements Listener {
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
         Player player = event.getPlayer();
-        if (FreezeMode.freezedPlayers.contains(player.getUniqueId())) event.setCancelled(true);
+        ConfigurationSection freezeSection = EssentialCommands.getInstance().getConfig().getConfigurationSection("freeze");
+        if (freezeSection.getStringList("players-freezed").contains(player.getName())) event.setCancelled(true);
     }
 }

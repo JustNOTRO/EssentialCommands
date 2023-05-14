@@ -39,25 +39,25 @@ public class SpeedCommand implements CommandExecutor {
 
         } catch (NumberFormatException e) {
             player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-            player.sendMessage(Message.fixColor("&7[&b&lEssential Commands&7] &8>> &cInvalid speed level."));
+            player.sendMessage(Message.fixColor("&7(Silent) &cInvalid speed level&7."));
             return false;
         }
 
         if (speed > 10.0F || speed < 0.0F) {
             player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-            player.sendMessage(Message.fixColor("&7[&b&lEssential Commands&7] &8>> &cInvalid speed level."));
+            player.sendMessage(Message.fixColor("&7(Silent) &cInvalid speed level&7."));
             return false;
         }
 
         if (player.isFlying()) {
             player.setFlySpeed((float) speed / 10);
             player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("allowed")), 1, 1);
-            player.sendMessage(Message.fixColor("&7[&b&lEssential Commands&7] &8>> &bFly speed has been set to &3" + speed + "&b."));
+            player.sendMessage(Message.fixColor("&7(Silent) &bFly speed has been set to &3" + speed + "&7."));
             return true;
         }
         player.setWalkSpeed((float) speed / 10);
         player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("allowed")), 1, 1);
-        player.sendMessage(Message.fixColor("&7[&b&lEssential Commands&7] &8>> &bWalk speed has been set to &3" + speed + "&b."));
+        player.sendMessage(Message.fixColor("&7(Silent) &bWalk speed has been set to &3" + speed + "&7."));
         return true;
     }
 }

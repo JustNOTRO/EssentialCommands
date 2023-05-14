@@ -1,5 +1,6 @@
 package me.notro.essentialcommands.commands;
 
+import me.notro.essentialcommands.systems.GUIManager;
 import me.notro.essentialcommands.utils.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -24,27 +25,20 @@ public class ParticleGUICommand implements CommandExecutor {
             return false;
         }
 
-        Inventory particleInventory = Bukkit.createInventory(player, 9, Message.fixColor("&cParticle Wizard"));
+        if (args.length > 0) {
+            player.sendMessage(Message.fixColor("&7(Silent) &cUsage&7: &b/particle"));
+            return false;
+        }
 
-        ItemStack flameItemStack = new ItemStack(Material.BLAZE_ROD);
-        ItemMeta flameItemMeta = flameItemStack.getItemMeta();
-        flameItemMeta.setDisplayName(Message.fixColor("&4THE DEVIL FLAMES"));
-        List<String> particleLore = new ArrayList<>();
-        particleLore.add(Message.fixColor("&cSET YOURSELF ON FLAMES"));
-        flameItemMeta.setLore(particleLore);
-        flameItemStack.setItemMeta(flameItemMeta);
+        GUIManager guiManager = new GUIManager(player, player.getInventory());
+        guiManager.createGUIMenu(9, Message.fixColor("&cParticle Wizard"));
 
-        ItemStack cancelItemStack = new ItemStack(Material.BARRIER);
-        ItemMeta cancelItemMeta = cancelItemStack.getItemMeta();
-        cancelItemMeta.setDisplayName(Message.fixColor("&cCANCEL PARTICLE"));
-        List<String> cancelParticleLore = new ArrayList<>();
-        cancelParticleLore.add(Message.fixColor("&cCANCEL YOUR CURRENT PARTICLE"));
-        cancelItemMeta.setLore(cancelParticleLore);
-        cancelItemStack.setItemMeta(cancelItemMeta);
+        ItemStack blaze = new ItemStack(Material.BLAZE_ROD);
+        List<String> blazeLore = new ArrayList<>();
+        blazeLore.add(Message.fixColor("&4&lMUAHHAAH NOTRO GAMING!"));
 
-        particleInventory.setItem(0, flameItemStack);
-        particleInventory.setItem(8, cancelItemStack);
-        player.openInventory(particleInventory);
+        guiManager.createGUIItems(0, blaze, Message.fixColor("&cSet yourself on FLAMES"), blazeLore);
+        player.openInventory(guiManager.getInventory());
         return true;
     }
 }

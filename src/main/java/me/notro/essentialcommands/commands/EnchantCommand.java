@@ -2,6 +2,8 @@ package me.notro.essentialcommands.commands;
 
 import me.notro.essentialcommands.EssentialCommands;
 import me.notro.essentialcommands.utils.Message;
+import org.bukkit.Keyed;
+import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -32,36 +34,30 @@ public class EnchantCommand implements CommandExecutor, TabCompleter {
             return false;
         }
 
-        if (args.length == 0) {
-            player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-            player.sendMessage(Message.fixColor(Message.NO_ARGUMENTS_PROVIDED.getDefaultMessage()));
-            return false;
-        }
-
         if (args.length < 2) {
             player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-            player.sendMessage(Message.fixColor("&7(Silent) &cusage&7: &b/enchant <enchantment> <level>"));
+            player.sendMessage(Message.fixColor("&7(Silent) &cUsage&7: &b/enchant <enchantment> <level>"));
             return false;
         }
 
-        Enchantment enchantment = Enchantment.getByName(args[0].toUpperCase());
+        Enchantment enchantment = Enchantment.getByKey(NamespacedKey.fromString(args[0]));
         int enchantmentLevel = Integer.parseInt(args[1]);
         ItemMeta enchantmentMeta = player.getInventory().getItemInMainHand().getItemMeta();
-        
+
         if (enchantmentMeta == null) {
             player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-            player.sendMessage(Message.fixColor("&7(Silent) &b" + player.getName() + " &cis not holding anything&7."));
+            player.sendMessage(Message.fixColor("&7(Silent) &3" + player.getName() + " &cis not holding anything&7."));
             return false;
         }
 
         if (enchantment == null) {
             player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-            player.sendMessage(Message.fixColor("&7(Silent) &cenchantment does not exist&7."));
+            player.sendMessage(Message.fixColor("&7(Silent) &cEnchantment does not exist&7."));
             return false;
         }
         enchantmentMeta.addEnchant(enchantment, enchantmentLevel, true);
         player.getInventory().getItemInMainHand().setItemMeta(enchantmentMeta);
-        player.sendMessage(Message.fixColor("&7(Silent) &bset &3" + enchantment.getName().toLowerCase() + "&b " + enchantmentLevel + "&b."));
+        player.sendMessage(Message.fixColor("&7(Silent) &bSet &3" + enchantment.getName().toLowerCase() + "&b " + enchantmentLevel + "&7."));
         return true;
     }
 
@@ -73,7 +69,7 @@ public class EnchantCommand implements CommandExecutor, TabCompleter {
             Enchantment[] enchantment = Enchantment.values();
 
             for (Enchantment value : enchantment) {
-                enchantments.add(value.getName().toLowerCase());
+                enchantments.add(value.getKey().toString().toLowerCase());
             }
             return enchantments;
         }

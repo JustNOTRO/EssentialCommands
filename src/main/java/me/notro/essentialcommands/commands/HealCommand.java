@@ -28,12 +28,12 @@ public class HealCommand implements CommandExecutor {
 
         if (player.getHealth() == 20) {
             player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-            player.sendMessage(Message.fixColor("&7[&b&lEssential Commands&7] &8>> &cYou are already full health"));
+            player.sendMessage(Message.fixColor("&7(Silent) &cYou are already full health&7."));
             return false;
         }
         player.setHealth(20.0);
         player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("allowed")), 1, 1);
-        player.sendMessage(Message.fixColor("&7[&b&lEssential Commands&7] &8>> &bYou have been &aHealed."));
+        player.sendMessage(Message.fixColor("&7(Silent) &bYou have been &3Healed&7."));
         return true;
     }
 }

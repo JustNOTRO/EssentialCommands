@@ -29,20 +29,20 @@ public class WearCommand implements CommandExecutor {
 
         if (args.length > 0) {
             player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-            player.sendMessage(Message.fixColor("&7[&b&lEssential Commands&7] &8>> &cUsage&3: &7/wear"));
+            player.sendMessage(Message.fixColor("&7(Silent) &cUsage&7: &b/wear"));
             return false;
         }
 
         if (player.getInventory().getItemInMainHand().getItemMeta() == null) {
             player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-            player.sendMessage(Message.fixColor("&7[&b&lEssential Commands&7] &8>> &cPlayer is not holding anything."));
+            player.sendMessage(Message.fixColor("&7(Silent) &cPlayer is not holding anything&7."));
             return false;
         }
         ItemStack helmetItemStack = player.getInventory().getItemInMainHand();
         player.getInventory().setHelmet(helmetItemStack);
         player.getInventory().removeItem(helmetItemStack);
         player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("allowed")), 1, 1);
-        player.sendMessage(Message.fixColor("&7[&b&lEssential Commands&7] &8>> &3" + player.getName() + " &bis now wearing a &3" + player.getInventory().getHelmet().getType().toString().toLowerCase()+ "&b."));
+        player.sendMessage(Message.fixColor("&7(Silent) &3" + player.getName() + " &bis now wearing a &3" + player.getInventory().getHelmet().getType().toString().toLowerCase()+ "&7."));
         return true;
     }
 }

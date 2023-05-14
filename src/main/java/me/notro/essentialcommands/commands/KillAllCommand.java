@@ -29,14 +29,14 @@ public class KillAllCommand implements CommandExecutor {
 
         if (args.length > 0) {
             player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-            player.sendMessage(Message.fixColor("&7[&b&lEssential Commands&7] &8>> &cUsage&3: &7/killall"));
+            player.sendMessage(Message.fixColor("&7(Silent) &cUsage&7: &b/killall"));
             return false;
         }
 
         Bukkit.getOnlinePlayers().forEach(onlinePlayers -> {
             onlinePlayers.setHealth(0.0D);
             player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("allowed")), 1, 1);
-            player.sendMessage(Message.fixColor("&7[&b&lEssential Commands&7] &8>> &bKilled all &3players&b."));
+            player.sendMessage(Message.fixColor("&7(Silent) &bKilled all &3players&7."));
         });
         return true;
     }

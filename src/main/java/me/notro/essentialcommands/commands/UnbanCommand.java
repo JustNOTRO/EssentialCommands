@@ -26,6 +26,7 @@ public class UnbanCommand implements CommandExecutor {
             sender.sendMessage(Message.fixColor(Message.NO_ARGUMENTS_PROVIDED.getDefaultMessage()));
             return false;
         }
+
         OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
 
         try {
@@ -34,9 +35,10 @@ public class UnbanCommand implements CommandExecutor {
             sender.sendMessage(Message.fixColor("&7(Silent) &cPlayer does not exist&7."));
             return false;
         }
+        punishmentSection.set("reason", null);
         punishmentSection.set("players", null);
         EssentialCommands.getInstance().saveConfig();
-        sender.sendMessage(Message.fixColor("&7(Silent) &b" + sender.getName() + " &3unbanned &b" + target.getName() + "&7."));
+        sender.sendMessage(Message.fixColor("&7(Silent) &3" + sender.getName() + " &bunbanned &3" + target.getName() + "&7."));
         return true;
     }
 }

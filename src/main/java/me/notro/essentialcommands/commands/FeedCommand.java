@@ -29,12 +29,12 @@ public class FeedCommand implements CommandExecutor {
 
         if (player.getFoodLevel() == 20.0) {
             player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-            player.sendMessage(Message.fixColor("&7(Silent) &cyou are already full hunger level&7."));
+            player.sendMessage(Message.fixColor("&7(Silent) &cYou are already full hunger level&7."));
             return false;
         }
         player.setFoodLevel(20);
         player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("allowed")), 1, 1);
-        player.sendMessage(Message.fixColor("&7(Silent) &byour food level has been raised&7."));
+        player.sendMessage(Message.fixColor("&7(Silent) &bYour food level has been raised&7."));
         return true;
     }
 }

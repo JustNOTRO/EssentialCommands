@@ -27,7 +27,7 @@ public class SetSpawnCommand implements CommandExecutor {
         }
         EssentialCommands.getInstance().getConfig().set("spawn", player.getLocation());
         EssentialCommands.getInstance().saveConfig();
-        player.sendMessage(Message.fixColor("Spawn has been set!"));
+        player.sendMessage(Message.fixColor("&aSpawn has been set&7."));
         return true;
     }
 }

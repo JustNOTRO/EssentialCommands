@@ -19,6 +19,27 @@ spawn:
 punishments:
   ban:
     players:
-      -
-
+    message:
     reason:
+
+  mute:
+    players:
+    message:
+    reason:
+
+vanish:
+  players-vanished:
+  staff-see: true
+  pickup-items: false
+
+god:
+  players:
+
+freeze:
+  players-freezed:
+
+build:
+  players-building:
+
+mutechat:
+  chat-muted: false

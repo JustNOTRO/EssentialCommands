@@ -15,7 +15,7 @@ public class SpawnCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         ConfigurationSection soundSection = EssentialCommands.getInstance().getConfig().getConfigurationSection("sound.commands");
 
-        if (!(sender instanceof  Player player)) {
+        if (!(sender instanceof Player player)) {
             sender.sendMessage(Message.fixColor(Message.NO_SENDER_EXECUTOR.getDefaultMessage()));
             return false;
         }
@@ -28,7 +28,7 @@ public class SpawnCommand implements CommandExecutor {
         player.teleport(EssentialCommands.getInstance().getConfig().getLocation("spawn"));
         EssentialCommands.getInstance().saveConfig();
         player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("allowed")), 1, 1);
-        player.sendMessage(Message.fixColor("&7[&b&lEssential Commands&7] &8>> &bTeleported to the &3Spawn&b."));
+        player.sendMessage(Message.fixColor("&7(Silent) &bTeleported to the &3Spawn&7."));
         return true;
     }
 }

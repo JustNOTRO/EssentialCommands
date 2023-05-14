@@ -1,99 +1,69 @@
 package me.notro.essentialcommands.commands;
 
-import me.notro.essentialcommands.EssentialCommands;
+import me.notro.essentialcommands.systems.KitManager;
 import me.notro.essentialcommands.utils.Message;
 import org.bukkit.Material;
-import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class KitCommand implements CommandExecutor, TabCompleter {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        ConfigurationSection soundSection = EssentialCommands.getInstance().getConfig().getConfigurationSection("sound.commands");
 
-        if (!(sender instanceof Player player)) {
-            sender.sendMessage(Message.fixColor(Message.NO_ARGUMENTS_PROVIDED.getDefaultMessage()));
+        if (!(sender instanceof  Player player)) {
+            sender.sendMessage(Message.fixColor(Message.NO_SENDER_EXECUTOR.getDefaultMessage()));
             return false;
         }
 
-        if (!player.hasPermission("essentials.kits")) {
-            player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")), 1, 1);
+        if (!player.hasPermission("essentials.kit")) {
             player.sendMessage(Message.fixColor(Message.NO_PERMISSION.getDefaultMessage()));
             return false;
         }
 
         if (args.length == 0) {
-            player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-            player.sendMessage(Message.fixColor(Message.NO_ARGUMENTS_PROVIDED.getDefaultMessage()));
+            player.sendMessage(Message.fixColor("&cUsage&7: &b/kit <kit-type>"));
             return false;
         }
 
-        if (args.length > 1) {
-            player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-            player.sendMessage(Message.fixColor("&7[&b&lEssential Commands&7] &8>> &cUsage&3: &7/kit <casual/strong>"));
+        ItemStack[] casualKit = new ItemStack[4];
+        ItemStack[] strongKit = new ItemStack[4];
+        Material[] materials = new Material[4];
+
+        if (!player.getInventory().isEmpty()) {
+            player.sendMessage(Message.fixColor("&cYou need to clear your inventory first!"));
             return false;
         }
+
+        KitManager kitManager = new KitManager(player);
 
         switch (args[0].toLowerCase()) {
             case "casual" -> {
-                ItemStack[] casualKit = new ItemStack[4];
-                casualKit[3] = new ItemStack(Material.IRON_HELMET);
-                casualKit[2] = new ItemStack(Material.IRON_CHESTPLATE); // Kit Materials
-                casualKit[1] = new ItemStack(Material.IRON_LEGGINGS);
-                casualKit[0] = new ItemStack(Material.IRON_BOOTS);
-                ItemStack diamondSword = new ItemStack(Material.DIAMOND_SWORD);
+                materials[3] = Material.IRON_HELMET;
+                materials[2] = Material.IRON_CHESTPLATE;
+                materials[1] = Material.IRON_LEGGINGS;
+                materials[0] = Material.IRON_BOOTS;
 
-                for (ItemStack content : player.getInventory().getContents()) {
-
-                    if (!player.getInventory().isEmpty()) {
-                        player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-                        player.sendMessage(Message.fixColor("&7[&b&lEssential Commands&7] &8>> &cAnother kit is already being used."));
-                        return false;
-                    }
-                    player.getInventory().setArmorContents(casualKit);
-                    player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("allowed")), 1, 1);
-                    player.getInventory().addItem(diamondSword);
-                    player.sendMessage(Message.fixColor("&7[&b&lEssential Commands&7] &8>> &bKit &3casual &bhas been granted."));
-                    return true;
-                }
+                kitManager.createKit(casualKit, materials, Message.fixColor("&eCasual Kit"), Message.fixColor("&eThis kit is for casuals haha!"), Material.DIAMOND_SWORD);
+                player.sendMessage(Message.fixColor("&bKit &3Casual &bhas been granted&7."));
             }
             case "strong" -> {
-                ItemStack[] strongKit = new ItemStack[4];
-                strongKit[3] = new ItemStack(Material.NETHERITE_HELMET);
-                strongKit[2] = new ItemStack(Material.NETHERITE_CHESTPLATE); // Kit Materials
-                strongKit[1] = new ItemStack(Material.NETHERITE_LEGGINGS);
-                strongKit[0] = new ItemStack(Material.NETHERITE_BOOTS);
-                ItemStack netheriteSword = new ItemStack(Material.NETHERITE_SWORD);
+                materials[3] = Material.NETHERITE_HELMET;
+                materials[2] = Material.NETHERITE_CHESTPLATE;
+                materials[1] = Material.NETHERITE_LEGGINGS;
+                materials[0] = Material.NETHERITE_BOOTS;
 
-                for (ItemStack content : player.getInventory().getContents()) {
-
-                    if (!player.getInventory().isEmpty()) {
-                        player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-                        player.sendMessage(Message.fixColor("&7[&b&lEssential Commands&7] &8>> &cAnother kit is already being used."));
-                        return false;
-                    }
-                    player.getInventory().setArmorContents(strongKit);
-                    player.getInventory().addItem(netheriteSword);
-                    player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("allowed")), 1, 1);
-                    player.sendMessage(Message.fixColor("&7[&b&lEssential Commands&7] &8>> &bKit &3strong &bhas been granted."));
-                    return true;
-                }
+                kitManager.createKit(strongKit, materials, Message.fixColor("&4Strong Kit"), Message.fixColor("&cThat kit is very strong!"), Material.NETHERITE_SWORD);
+                player.sendMessage(Message.fixColor("bKit &3Strong &bhas been granted&7."));
             }
-            default -> {
-                player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-                player.sendMessage(Message.fixColor("&7[&b&lEssential Commands&7] &8>> &cKit does not exist."));
-            }
+            default -> player.sendMessage(Message.fixColor("&cUsage&7: &b/kit <kit-type>"));
         }
         return true;
     }
@@ -102,10 +72,10 @@ public class KitCommand implements CommandExecutor, TabCompleter {
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
 
         if (args.length == 1) {
-            List<String> kitNames = new ArrayList<>();
-            kitNames.add("casual");
-            kitNames.add("strong");
-            return kitNames;
+            List<String> kits = new ArrayList<>();
+            kits.add("casual");
+            kits.add("strong");
+            return kits;
         }
         return null;
     }

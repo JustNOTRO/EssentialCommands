@@ -1,6 +1,7 @@
 package me.notro.essentialcommands.listeners;
 
-import me.notro.essentialcommands.systems.GodMode;
+import me.notro.essentialcommands.EssentialCommands;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -10,8 +11,8 @@ public class EntityDamageListener implements Listener {
 
     @EventHandler
     public void onPlayerGodMode(EntityDamageEvent event) {
-
+        ConfigurationSection godModeSection = EssentialCommands.getInstance().getConfig().getConfigurationSection("god");
         if (!(event.getEntity() instanceof Player player)) return;
-        if (GodMode.godModePlayers.contains(player.getUniqueId())) event.setCancelled(true);
+        if (godModeSection.getStringList("players").contains(player.getName())) event.setCancelled(true);
     }
 }

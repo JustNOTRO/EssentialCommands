@@ -30,15 +30,9 @@ public class WeatherCommand implements CommandExecutor, TabCompleter {
             return false;
         }
 
-        if (args.length == 0) {
+        if (args.length < 1) {
             player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-            player.sendMessage(Message.fixColor(Message.NO_ARGUMENTS_PROVIDED.getDefaultMessage()));
-            return false;
-        }
-
-        if (args.length > 1) {
-            player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-            player.sendMessage(Message.fixColor("&7[&b&lEssential Commands&7] &8>> &cUsage&3: &7/weather <clear/rain>"));
+            player.sendMessage(Message.fixColor("&7(Silent) &cUsage&7: &b/weather <clear/rain>"));
             return false;
         }
 
@@ -47,19 +41,20 @@ public class WeatherCommand implements CommandExecutor, TabCompleter {
             case "clear" -> {
                 player.getWorld().setStorm(false);
                 player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("allowed")), 1, 1);
-                player.sendMessage(Message.fixColor("&7[&b&lEssential Commands&7] &8>> &bSet weather to &3Clear&b."));
+                player.sendMessage(Message.fixColor("&7(Silent) &bSet weather to &3Clear&7."));
             }
             case "rain" -> {
                 player.getWorld().setStorm(true);
                 player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("allowed")), 1, 1);
-                player.sendMessage(Message.fixColor("&7[&b&lEssential Commands&7] &8>> &bSet weather to &3Rain&b."));
+                player.sendMessage(Message.fixColor("&7(Silent) &bSet weather to &3Rain&7."));
             }
             case "thunder" -> {
                 player.getWorld().setStorm(true);
                 player.getWorld().setThundering(true);
                 player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("allowed")), 1, 1);
-                player.sendMessage(Message.fixColor("&7[&b&lEssential Commands&7] &8>> &bSet weather to &3Rain &band &3Thunder&b."));
+                player.sendMessage(Message.fixColor("&7(Silent) &bSet weather to &3Rain &band &3Thunder&7."));
             }
+            default -> player.sendMessage(Message.fixColor("&7(Silent) &cUsage&7: &b/weather <clear/rain>"));
         }
         return true;
     }

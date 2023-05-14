@@ -39,49 +39,49 @@ public class GamemodeCommand implements CommandExecutor, TabCompleter {
 
         switch (args[0].toLowerCase()) {
 
-            case "0" -> {
+            case "0", "s" -> {
                 if (player.getGameMode().equals(GameMode.SURVIVAL)) {
                     player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-                    player.sendMessage(Message.fixColor("&7(Silent) &calready on game mode survival&7."));
+                    player.sendMessage(Message.fixColor("&7(Silent) &cAlready on game mode Survival&7."));
                     return false;
                 }
                 player.setGameMode(GameMode.SURVIVAL);
                 player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("allowed")), 1, 1);
-                player.sendMessage(Message.fixColor("&7(Silent) &bset game mode to &3survival&7."));
+                player.sendMessage(Message.fixColor("&7(Silent) &bSet game mode to &3Survival&7."));
             }
-            case "1" -> {
+            case "1", "c" -> {
                 if (player.getGameMode().equals(GameMode.CREATIVE)) {
                     player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-                    player.sendMessage(Message.fixColor("&7(Silent) &calready on game mode creative&7."));
+                    player.sendMessage(Message.fixColor("&7(Silent) &cAlready on game mode Creative&7."));
                     return false;
                 }
                 player.setGameMode(GameMode.CREATIVE);
                 player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("allowed")), 1, 1);
-                player.sendMessage(Message.fixColor("&7(Silent) &bset game mode to &3creative&7."));
+                player.sendMessage(Message.fixColor("&7(Silent) &bSet game mode to &3Creative&7."));
             }
-            case "2" -> {
+            case "2", "a" -> {
                 if (player.getGameMode().equals(GameMode.ADVENTURE)) {
                     player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-                    player.sendMessage(Message.fixColor("&7(Silent) &calready on game mode adventure&7."));
+                    player.sendMessage(Message.fixColor("&7(Silent) &cAlready on game mode Adventure&7."));
                     return false;
                 }
                 player.setGameMode(GameMode.ADVENTURE);
                 player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("allowed")), 1, 1);
-                player.sendMessage(Message.fixColor("&7[&b&lEssential Commands&7] &8>> &bset game mode to &3adventure&7."));
+                player.sendMessage(Message.fixColor("&7[&b&lEssential Commands&7] &8>> &bSet game mode to &3Adventure&7."));
             }
-            case "3" -> {
+            case "3", "sp" -> {
                 if (player.getGameMode().equals(GameMode.SPECTATOR)) {
                     player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-                    player.sendMessage(Message.fixColor("&7(Silent) &calready on game mode spectator&7."));
+                    player.sendMessage(Message.fixColor("&7(Silent) &cAlready on game mode Spectator&7."));
                     return false;
                 }
                 player.setGameMode(GameMode.SPECTATOR);
                 player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("allowed")), 1, 1);
-                player.sendMessage(Message.fixColor("&7(Silent) &bset game mode to &3spectator&7."));
+                player.sendMessage(Message.fixColor("&7(Silent) &bSet game mode to &3Spectator&7."));
             }
             default -> {
                 player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-                player.sendMessage(Message.fixColor("&7(Silent) &cunknown game mode please try again&7."));
+                player.sendMessage(Message.fixColor("&7(Silent) &cUnknown game mode please try again&7."));
                 return false;
             }
         }
@@ -94,9 +94,13 @@ public class GamemodeCommand implements CommandExecutor, TabCompleter {
         if (args.length == 1) {
             List<String> playerGamemode = new ArrayList<>();
             playerGamemode.add("0");
+            playerGamemode.add("s");
             playerGamemode.add("1");
+            playerGamemode.add("c");
             playerGamemode.add("2");
+            playerGamemode.add("a");
             playerGamemode.add("3");
+            playerGamemode.add("sp");
             return playerGamemode;
         }
         return null;

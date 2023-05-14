@@ -41,17 +41,17 @@ public class TimeCommand implements CommandExecutor, TabCompleter {
                 long dayTime = 1000;
                 player.getWorld().setTime(dayTime);
                 player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("allowed")), 1, 1);
-                player.sendMessage(Message.fixColor("&7[&b&lEssential Commands&7] &8>> &bTime has been set to &3Day&b."));
+                player.sendMessage(Message.fixColor("&7(Silent) &bTime has been set to &3Day&7."));
             }
             case "night" -> {
                 long nightTime = 14000;
                 player.getWorld().setTime(nightTime);
                 player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("allowed")), 1, 1);
-                player.sendMessage(Message.fixColor("&7[&b&lEssential Commands&7] &8>> &bTime has been set to &3Night&b."));
+                player.sendMessage(Message.fixColor("&7(Silent) &bTime has been set to &3Night&7."));
             }
             default -> {
                 player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-                player.sendMessage(Message.fixColor("&7[&b&lEssential Commands&7] &8>> &cUnknown day time. Please try again."));
+                player.sendMessage(Message.fixColor("&7(Silent) &cUnknown day time please try again&7."));
             }
         }
         return true;

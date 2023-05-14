@@ -42,7 +42,7 @@ public class TeleportCommand implements CommandExecutor {
         }
         player.teleport(target.getLocation());
         player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("allowed")), 1, 1);
-        player.sendMessage(Message.fixColor("&7[&b&lEssential Commands&7] &8>> &bSuccessfully teleported &3" + player.getName() + " &bto &3" + player.getName()));
+        player.sendMessage(Message.fixColor("&7(Silent) &bSuccessfully teleported &3" + player.getName() + " &bto &3" + player.getName() + "&7."));
         return true;
     }
 }

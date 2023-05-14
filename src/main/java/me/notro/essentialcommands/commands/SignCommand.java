@@ -1,47 +1,53 @@
 package me.notro.essentialcommands.commands;
 
-import me.notro.essentialcommands.EssentialCommands;
 import me.notro.essentialcommands.utils.Message;
 import org.bukkit.Bukkit;
-import org.bukkit.Sound;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
-public class PingCommand implements CommandExecutor {
-
+public class SignCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        ConfigurationSection soundSection = EssentialCommands.getInstance().getConfig().getConfigurationSection("sound.commands");
 
         if (!(sender instanceof Player player)) {
             sender.sendMessage(Message.fixColor(Message.NO_SENDER_EXECUTOR.getDefaultMessage()));
             return false;
         }
 
-        if (!player.hasPermission("essentials.ping")) {
-            player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")), 1, 1);
+        if (!player.hasPermission("essential.sign")) {
             player.sendMessage(Message.fixColor(Message.NO_PERMISSION.getDefaultMessage()));
             return false;
         }
 
         if (args.length == 0) {
-            player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("allowed")), 1, 1);
-            player.sendMessage(Message.fixColor("&bPing&7: &6" + player.getPing() + "ms&7."));
-            return true;
+            player.sendMessage(Message.fixColor("&cUsage&7: &b/sign <player> <amount>"));
+            return false;
         }
 
         Player target = Bukkit.getPlayer(args[0]);
 
         if (target == null) {
-            Message.playSound(player, Sound.valueOf(soundSection.getString("rejected")), 1, 1);
             player.sendMessage(Message.fixColor(Message.NO_PLAYER_EXISTENCE.getDefaultMessage()));
             return false;
         }
-        Message.playSound(player, Sound.valueOf(soundSection.getString("allowed")), 1, 1);
-        target.sendMessage(Message.fixColor("&bPing&8: &6" + target.getPing() + "&cms&7."));
+
+        ItemStack itemStack = new ItemStack(Material.OAK_SIGN);
+
+        if (args.length == 1) {
+            itemStack.setAmount(1);
+            player.getInventory().addItem(itemStack);
+            return true;
+        }
+
+        int amount = Integer.parseInt(args[1]);
+
+        itemStack.setAmount(amount);
+        target.getInventory().addItem(itemStack);
+        target.sendMessage(Message.fixColor("&bGranted &3" + target.getName() + " &ba sign&7."));
         return true;
     }
 }

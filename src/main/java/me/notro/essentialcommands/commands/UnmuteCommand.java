@@ -1,10 +1,10 @@
 package me.notro.essentialcommands.commands;
 
+import lombok.NonNull;
 import me.notro.essentialcommands.EssentialCommands;
-import me.notro.essentialcommands.utils.Config;
 import me.notro.essentialcommands.utils.Message;
 import org.bukkit.Bukkit;
-import org.bukkit.Sound;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -16,42 +16,33 @@ public class UnmuteCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         ConfigurationSection soundSection = EssentialCommands.getInstance().getConfig().getConfigurationSection("sound.commands");
-        Config config = EssentialCommands.getInstance().getPunishmentsConfig();
+        ConfigurationSection punishmentSection = EssentialCommands.getInstance().getConfig().getConfigurationSection("punishments.mute");
 
-
-        if (!(sender instanceof Player player)) {
-            sender.sendMessage(Message.fixColor(Message.NO_SENDER_EXECUTOR.getDefaultMessage()));
-            return false;
-        }
-
-        if (!player.hasPermission("essentials.unmute")) {
-            player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-            player.sendMessage(Message.fixColor(Message.NO_PERMISSION.getDefaultMessage()));
+        if (!sender.hasPermission("essentials.unmute")) {
+            sender.sendMessage(Message.fixColor(Message.NO_PERMISSION.getDefaultMessage()));
             return false;
         }
 
         if (args.length == 0) {
-            player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-            player.sendMessage(Message.fixColor(Message.NO_ARGUMENTS_PROVIDED.getDefaultMessage()));
+            sender.sendMessage(Message.fixColor(Message.NO_ARGUMENTS_PROVIDED.getDefaultMessage()));
             return false;
         }
 
         if (args.length > 1) {
-            player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-            player.sendMessage(Message.fixColor("&7[&b&lEssential Commands&7] &8>> &cUsage&3: &7/unmute <player>"));
+            sender.sendMessage(Message.fixColor("&7(Silent) &cUsage&7: &b/unmute <player>"));
             return false;
         }
 
-        Player target = Bukkit.getPlayer(args[0]);
+        OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
 
-        if (target == null) {
-            player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-            player.sendMessage(Message.fixColor(Message.NO_PLAYER_EXISTENCE.getDefaultMessage()));
-            return false;
+        if (Bukkit.getPlayer(args[0]) != null) {
+            Player myTarget = Bukkit.getPlayer(args[0]);
+            myTarget.sendMessage(Message.fixColor("&aYou have been unmuted by &3" + sender.getName() + "&7."));
         }
-
-        player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("allowed")), 1, 1);
-        player.sendMessage(Message.fixColor("&7[&b&lEssential Commands&7] &8>> &b " + player.getName() + "Unmuted " + target.getName()));
+        punishmentSection.set("reason", null);
+        punishmentSection.set("players", null);
+        EssentialCommands.getInstance().saveConfig();
+        sender.sendMessage(Message.fixColor("&7(Silent) &3" + sender.getName() + "&b Unmuted &3" + target.getName() + "&7."));
         return true;
     }
 }

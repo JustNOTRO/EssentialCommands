@@ -28,15 +28,9 @@ public class PushCommand implements CommandExecutor {
             return false;
         }
 
-        if (args.length == 0) {
+        if (args.length < 1) {
             player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-            player.sendMessage(Message.fixColor(Message.NO_ARGUMENTS_PROVIDED.getDefaultMessage()));
-            return false;
-        }
-
-        if (args.length > 1) {
-            player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-            player.sendMessage(Message.fixColor("&7[&b&lEssential Commands&7] &8>> &cUsage&3: &7/push <player>"));
+            player.sendMessage(Message.fixColor("&7(Silent) &cUsage&7: &7/push <player>"));
             return false;
         }
 
@@ -49,7 +43,7 @@ public class PushCommand implements CommandExecutor {
             return false;
         }
         player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("allowed")), 1, 1);
-        player.sendMessage(Message.fixColor("&7[&b&lEssential Commands&7] &8>> &3" + player.getName() + " &bPushed &3" + target.getName() + " &bWOOSH WOOSH!"));
+        player.sendMessage(Message.fixColor("&7(Silent) &3" + player.getName() + " &bPushed &3" + target.getName() + " &bWOOSH WOOSH&7."));
         target.setVelocity(vector);
         return true;
     }

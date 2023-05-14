@@ -29,14 +29,16 @@ public class TeleportAllCommand implements CommandExecutor {
 
         if (args.length > 0) {
             player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-            player.sendMessage(Message.fixColor("&7[&b&lEssential Commands&7] &8>> &cUsage&3: &7/tpall"));
+            player.sendMessage(Message.fixColor("&7(Silent) &cUsage&3: &7/tpall"));
             return false;
         }
 
         Bukkit.getOnlinePlayers().forEach(onlinePlayers -> {
+
             onlinePlayers.teleport(player.getLocation());
             player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")), 1, 1);
             player.sendMessage(Message.fixColor("&7[&b&lEssential Commands&7] &8>> &bTeleported everyone to &3" + player.getName() + "&b."));
+            return;
         });
         return true;
     }

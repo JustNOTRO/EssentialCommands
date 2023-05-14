@@ -28,7 +28,7 @@ public class ClearInventoryCommand implements CommandExecutor {
 
         if (player.getInventory().isEmpty()) {
             player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-            player.sendMessage(Message.fixColor("&7(Silent) &call items has already been cleared&7."));
+            player.sendMessage(Message.fixColor("&7(Silent) &cAll items has already been cleared&7."));
             return false;
         }
 
@@ -36,7 +36,7 @@ public class ClearInventoryCommand implements CommandExecutor {
             if (player.getInventory().containsAtLeast(itemStack, 1)) {
                 player.getInventory().clear();
                 player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("allowed")), 1, 1);
-                player.sendMessage(Message.fixColor("&7(Silent) &bsuccessfully cleared all the items from the inventory&7."));
+                player.sendMessage(Message.fixColor("&7(Silent) &bSuccessfully cleared all the items from the inventory&7."));
             }
         });
         return true;

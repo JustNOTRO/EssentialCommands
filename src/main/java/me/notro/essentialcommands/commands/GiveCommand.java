@@ -4,7 +4,6 @@ import me.notro.essentialcommands.EssentialCommands;
 import me.notro.essentialcommands.utils.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -22,57 +21,54 @@ public class GiveCommand implements CommandExecutor, TabCompleter {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         ConfigurationSection soundSection = EssentialCommands.getInstance().getConfig().getConfigurationSection("sound.commands");
 
-        if (!(sender instanceof Player player)) {
-            sender.sendMessage(Message.fixColor(Message.NO_SENDER_EXECUTOR.getDefaultMessage()));
+        if (!sender.hasPermission("essentials.give")) {
+            sender.sendMessage(Message.fixColor(Message.NO_PERMISSION.getDefaultMessage()));
             return false;
         }
 
-        if (!player.hasPermission("essentials.give")) {
-            player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-            player.sendMessage(Message.fixColor(Message.NO_PERMISSION.getDefaultMessage()));
-            return false;
-        }
-
-        if (args.length == 0) {
-            player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-            player.sendMessage(Message.fixColor(Message.NO_ARGUMENTS_PROVIDED.getDefaultMessage()));
-            return false;
-        }
-
-        if (args.length > 3 ) {
-            player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-            player.sendMessage(Message.fixColor("&7(Silent) &8>> &cusage&7: &b/give <player> <item> <count>"));
+        if (args.length < 2) {
+            sender.sendMessage(Message.fixColor("&7(Silent) &cUsage&7: &b/give <player> <item> <amount>"));
             return false;
         }
 
         Player target = Bukkit.getPlayer(args[0]);
 
         if (target == null) {
-            player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-            player.sendMessage(Message.fixColor(Message.NO_PLAYER_EXISTENCE.getDefaultMessage()));
+            sender.sendMessage(Message.fixColor(Message.NO_PLAYER_EXISTENCE.getDefaultMessage()));
             return false;
         }
 
         Material material = Material.getMaterial(args[1].toUpperCase());
-        int itemAmount = Integer.parseInt(args[2]);
 
         if (material == null) {
-            player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-            player.sendMessage(Message.fixColor("&7(Silent) &8>> &cmaterial does not exist&7."));
+            sender.sendMessage(Message.fixColor("&7(Silent) &cMaterial does not exist&7."));
             return false;
         }
 
         ItemStack itemStack = new ItemStack(material);
-        itemStack.setAmount(itemAmount);
 
-        if (itemStack.getAmount() == 0) {
-            player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-            player.sendMessage(Message.fixColor("&7(Silent) &8>> &camount needs to be at least 1&7."));
+        if (args.length == 2) {
+            itemStack.setAmount(1);
+            target.getInventory().addItem(itemStack);
+            return true;
+        }
+
+        int itemAmount;
+
+        try {
+            itemAmount = Integer.parseInt(args[2]);
+            itemStack.setAmount(itemAmount);
+        } catch (NumberFormatException exception) {
+            sender.sendMessage(Message.fixColor("&7(Silent) &cAmount needs to be numeric&7."));
+            return false;
+        }
+
+        if (itemAmount <= 0) {
+            sender.sendMessage(Message.fixColor("&7(Silent) &8>> &cAmount needs to be at least 1&7."));
             return false;
         }
         target.getInventory().addItem(itemStack);
-        player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("allowed")), 1, 1);
-        player.sendMessage(Message.fixColor("&7(Silent) &8>> &bgave &3" + target.getName() + " &b" + itemStack.getType().toString().toLowerCase() + "&7."));
+        sender.sendMessage(Message.fixColor("&7(Silent) &8>> &bGave &3" + target.getName() + " &b" + itemStack.getType().toString().toLowerCase() + "&7."));
         return true;
     }
 

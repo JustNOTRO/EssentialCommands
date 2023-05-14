@@ -27,24 +27,13 @@ public class PowerToolCommand implements CommandExecutor {
              return false;
          }
 
-        if (args.length == 0) {
+        if (args.length < 2) {
             player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-            player.sendMessage(Message.fixColor(Message.NO_ARGUMENTS_PROVIDED.getDefaultMessage()));
+            player.sendMessage(Message.fixColor("&7(Silent) &cUsage&7: &b/powertool <command> <target>"));
             return false;
         }
 
-        if (args.length > 2) {
-            player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-            player.sendMessage(Message.fixColor("&7[&b&lEssential Commands&7] &8>> &cUsage&3: &7/powertool <command> <target>"));
-            return false;
-        }
-        Command powerToolCast = Bukkit.getPluginCommand(args[0]);
         Player target = Bukkit.getPlayer(args[1]);
-
-        if (powerToolCast == null) {
-            player.sendMessage(Message.fixColor("&7[&b&lEssential Commands&7] &8>> &cCommand does not exist."));
-            return false;
-        }
 
         if (target == null) {
             player.sendMessage(Message.fixColor(Message.NO_PLAYER_EXISTENCE.getDefaultMessage()));

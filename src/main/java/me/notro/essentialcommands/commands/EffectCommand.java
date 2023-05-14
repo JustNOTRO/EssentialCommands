@@ -45,7 +45,7 @@ public class EffectCommand implements CommandExecutor, TabCompleter {
 
                 if (args.length < 5) {
                     player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-                    player.sendMessage(Message.fixColor("&7(Silent) &cusage&7: &b/effect <give/clear> <player> <effectType> <duration> <amplifier>"));
+                    player.sendMessage(Message.fixColor("&7(Silent) &cUsage&7: &b/effect <give/clear> <player> <effectType> <duration> <amplifier>"));
                     return false;
                 }
 
@@ -61,16 +61,23 @@ public class EffectCommand implements CommandExecutor, TabCompleter {
 
                 if (potionEffectType == null) {
                     player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-                    player.sendMessage(Message.fixColor("&7(Silent) &ceffect does not exist."));
+                    player.sendMessage(Message.fixColor("&7(Silent) &cEffect does not exist."));
                     return false;
                 }
 
-                int duration = Integer.parseInt(args[3]);
-                int amplifier = Integer.parseInt(args[4]);
+                int duration;
+                int amplifier;
 
-                target.addPotionEffect(new PotionEffect(potionEffectType, duration, amplifier));
+                try {
+                    duration = Integer.parseInt(args[3]);
+                    amplifier = Integer.parseInt(args[4]);
+                    target.addPotionEffect(new PotionEffect(potionEffectType, duration, amplifier));
+                } catch (NumberFormatException exception) {
+                    sender.sendMessage(Message.fixColor("&7(Silent) &8>> &cDuration and amplifier needs to be numeric&7."));
+                    return false;
+                }
                 player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("allowed")), 1, 1);
-                player.sendMessage(Message.fixColor("&7(Silent) &7added &b " + target.getName() + "&3 " + potionEffectType.getName().toLowerCase() + "&7."));
+                player.sendMessage(Message.fixColor("&7(Silent) &bAdded &3" + target.getName() + "&b " + potionEffectType.getName().toLowerCase() + "&7."));
             }
             case "clear" -> {
 
@@ -83,7 +90,7 @@ public class EffectCommand implements CommandExecutor, TabCompleter {
                 player.getActivePotionEffects().forEach(activePotion -> {
                     player.removePotionEffect(activePotion.getType());
                     player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("allowed")), 1, 1);
-                    player.sendMessage(Message.fixColor("&7(Silent) &7removed &b " + player.getName() + "&3 " + activePotion.getType().getName().toLowerCase() + "&7."));
+                    player.sendMessage(Message.fixColor("&7(Silent) &bremoved &3" + player.getName() + "&b " + activePotion.getType().getName().toLowerCase() + "&7."));
                 });
             }
         }

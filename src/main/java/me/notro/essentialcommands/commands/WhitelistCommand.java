@@ -1,6 +1,7 @@
 package me.notro.essentialcommands.commands;
 
 import me.notro.essentialcommands.EssentialCommands;
+import me.notro.essentialcommands.systems.WhitelistManager;
 import me.notro.essentialcommands.utils.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -9,6 +10,9 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class WhitelistCommand implements CommandExecutor {
 
@@ -23,64 +27,53 @@ public class WhitelistCommand implements CommandExecutor {
         }
 
         if (args.length == 0) {
-            Message.playSound(sender, Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-            sender.sendMessage(Message.fixColor(Message.NO_ARGUMENTS_PROVIDED.getDefaultMessage()));
+            sender.sendMessage(Message.fixColor("&7(Silent) &cUsage&7: &b/whitelist <action> <player>"));
             return false;
         }
+
         switch (args[0].toLowerCase()) {
+
             case "add" -> {
                 if (args.length < 2) {
-                    Message.playSound(sender, Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-                    sender.sendMessage(Message.fixColor("&7[&b&lEssential Commands&7] &8>> &cUsage&3: &c/whitelist <action> <player>"));
+                    sender.sendMessage(Message.fixColor("&7(Silent) &cUsage&7: &b/whitelist <action> <player>"));
                     return false;
                 }
-
-                OfflinePlayer offlineTarget = Bukkit.getOfflinePlayer(args[1]);
-
-                if (offlineTarget.isWhitelisted()) {
-                    Message.playSound(sender, Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-                    sender.sendMessage(Message.fixColor("&7(Silent) &b" + offlineTarget.getName() + "&7 is already whitelisted."));
-                    return false;
-                }
-                offlineTarget.setWhitelisted(true);
-                sender.sendMessage(Message.fixColor("&7(Silent) &b" + offlineTarget.getName() + " &7has been added to the whitelist."));
-                }
-            case "remove" -> {
-                OfflinePlayer offlineTarget = Bukkit.getOfflinePlayer(args[1]);
-
-                if (!offlineTarget.isWhitelisted()) {
-                    Message.playSound(sender, Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-                    sender.sendMessage(Message.fixColor("&7(Silent) &b" + offlineTarget.getName() + "&7 is already not whitelisted."));
-                    return false;
-                }
-                offlineTarget.setWhitelisted(false);
-                sender.sendMessage(Message.fixColor("&7(Silent) &b" + offlineTarget.getName() + " &7has been removed from the whitelist."));
-                }
-            case "on" -> {
-                if (Bukkit.getServer().hasWhitelist()) {
-                    Message.playSound(sender, Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-                    sender.sendMessage(Message.fixColor("&7(Silent) &cwhitelist is already on&7."));
-                    return false;
-                }
-                    Bukkit.setWhitelist(true);
-                    sender.sendMessage(Message.fixColor("&7(Silent) whitelist has been turned on."));
-                }
-                case "off" -> {
-                    if (!Bukkit.getServer().hasWhitelist()) {
-                        Message.playSound(sender, Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-                        sender.sendMessage(Message.fixColor("&7(Silent) &cwhitelist is already off."));
-                        return false;
-                    }
-                    Bukkit.setWhitelist(false);
-                    sender.sendMessage(Message.fixColor("&7(Silent whitelist has been turned off."));
-                }
-                case "list" -> {
-                sender.sendMessage(Message.fixColor("&7(Silent) whitelisted players: &b"));
-                Bukkit.getWhitelistedPlayers().forEach(offlinePlayer -> {
-                    sender.sendMessage(Message.fixColor("&b") + offlinePlayer.getName());
-                    });
-                }
+                OfflinePlayer player = Bukkit.getOfflinePlayer(args[1]);
+                WhitelistManager whitelistManager = new WhitelistManager(player);
+                whitelistManager.addPlayerToWhitelist();
             }
-            return true;
+
+            case "remove" -> {
+                if (args.length < 2) {
+                    sender.sendMessage(Message.fixColor("&cUsage&7: &b/whitelist <action> <player>"));
+                    return false;
+                }
+                OfflinePlayer player = Bukkit.getOfflinePlayer(args[1]);
+                WhitelistManager whitelistManager = new WhitelistManager(player);
+                whitelistManager.removePlayerFromWhitelist();
+            }
+
+            case "enable" -> {
+                WhitelistManager whitelistManager = new WhitelistManager(null);
+                whitelistManager.enableWhitelist();
+                sender.sendMessage(Message.fixColor("&7(Silent) &bWhitelist has been &3Enabled &bby &3" + sender.getName() + "&7."));
+            }
+
+            case "disable" -> {
+                WhitelistManager whitelistManager = new WhitelistManager(null);
+                whitelistManager.disableWhitelist();
+                sender.sendMessage(Message.fixColor("&7(Silent) &bWhitelist has been &3Disabled &bby &3" + sender.getName() + "&7."));
+            }
+
+            case "list" -> {
+                List<String> whitelistedPlayers = new ArrayList<>();
+                Bukkit.getWhitelistedPlayers().forEach(offlinePlayer -> {
+                    whitelistedPlayers.add(offlinePlayer.getName());
+                });
+                sender.sendMessage(Message.fixColor("&bWhitelisted Players&7: &3" + whitelistedPlayers + "&7."));
+            }
+            default -> sender.sendMessage(Message.fixColor("&7(Silent) &cUsage&7: &b/whitelist <action> <player>"));
         }
+        return true;
     }
+}

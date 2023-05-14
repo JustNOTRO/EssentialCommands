@@ -1,7 +1,7 @@
 package me.notro.essentialcommands.listeners;
 
 import me.notro.essentialcommands.EssentialCommands;
-import me.notro.essentialcommands.systems.GodMode;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -11,11 +11,11 @@ public class FoodLevelChangeListener implements Listener {
 
     @EventHandler
     public void onPlayerHungerDeplete(FoodLevelChangeEvent event) {
+        ConfigurationSection godModeSection = EssentialCommands.getInstance().getConfig().getConfigurationSection("god");
         Entity entity = event.getEntity();
 
-        if (GodMode.godModePlayers.contains(entity.getUniqueId())) {
-            event.getEntity().setFoodLevel(20);
-            event.setCancelled(true);
-        }
+        if (!godModeSection.getStringList("players").contains(entity.getName())) return;
+        event.getEntity().setFoodLevel(20);
+        event.setCancelled(true);
     }
 }

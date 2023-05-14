@@ -31,15 +31,9 @@ public class KickCommand implements CommandExecutor, TabCompleter {
             return false;
         }
 
-        if (args.length == 0) {
-            player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-            player.sendMessage(Message.fixColor(Message.NO_ARGUMENTS_PROVIDED.getDefaultMessage()));
-            return false;
-        }
-
         if (args.length < 2) {
             player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-            player.sendMessage(Message.fixColor("&7[&b&lEssential Commands&7] &8>> &cUsage&3: &7/kick <player> <reason>"));
+            player.sendMessage(Message.fixColor("&7(Silent) &cUsage&7: &b/kick <player> <reason>"));
             return false;
         }
 
@@ -51,18 +45,20 @@ public class KickCommand implements CommandExecutor, TabCompleter {
             return false;
         }
 
-        String reason = Message.fixColor("&b&7[&b&lEssential Commands&7] &8>> &bYou have been kicked from the server for the reason: &c");
+        String reason = " ";
 
         for (int i = 1; i < args.length; i++) {
-            reason = reason + args[i] + " ";
+            reason = reason + args[i];
         }
+
+        String message = Message.fixColor("&cYou have been kicked from the server for the reason: &c" + reason + "&7.");
 
         if (target.isOp()) {
             player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-            player.sendMessage(Message.fixColor("&7[&b&lEssential Commands&7] &8>> &cYou cannot kick this player."));
+            player.sendMessage(Message.fixColor("&7(Silent) &cYou can't kick this player&7."));
             return false;
         }
-        target.kickPlayer(reason);
+        target.kickPlayer(message);
         return true;
     }
 

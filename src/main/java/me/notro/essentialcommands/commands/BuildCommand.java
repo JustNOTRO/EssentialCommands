@@ -1,7 +1,6 @@
 package me.notro.essentialcommands.commands;
 
 import me.notro.essentialcommands.EssentialCommands;
-import me.notro.essentialcommands.systems.BuildMode;
 import me.notro.essentialcommands.utils.Message;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
@@ -19,6 +18,7 @@ public class BuildCommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         ConfigurationSection soundSection = EssentialCommands.getInstance().getConfig().getConfigurationSection("sound.commands");
+        ConfigurationSection buildSection = EssentialCommands.getInstance().getConfig().getConfigurationSection("build");
 
         if (!(sender instanceof  Player player)) {
             sender.sendMessage(Message.fixColor(Message.NO_SENDER_EXECUTOR.getDefaultMessage()));
@@ -39,25 +39,32 @@ public class BuildCommand implements CommandExecutor, TabCompleter {
 
         if (args.length > 1) {
             player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-            player.sendMessage(Message.fixColor("&7(Silent) &cusage&7: &b/build <enable/disable>"));
+            player.sendMessage(Message.fixColor("&7(Silent) &cUsage&7: &b/build <enable/disable>"));
             return false;
         }
+
+        List<String> playersBuilding = buildSection.getStringList("players-building");
+        if (playersBuilding.isEmpty()) buildSection.set("players-building", new ArrayList<>());
 
         switch (args[0].toLowerCase()) {
 
             case "enable" -> {
-                BuildMode.playersBuilding.remove(player.getUniqueId());
+                playersBuilding.remove(player.getName());
+                buildSection.set("players-building", playersBuilding);
                 player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("allowed")), 1, 1);
-                player.sendMessage(Message.fixColor("&7(Silent) &bbuild has been &3enabled&7."));
+                player.sendMessage(Message.fixColor("&7(Silent) &bBuild has been &3enabled&7."));
+                EssentialCommands.getInstance().saveConfig();
             }
             case "disable" -> {
-                BuildMode.playersBuilding.add(player.getUniqueId());
+                playersBuilding.add(player.getName());
+                buildSection.set("players-building", playersBuilding);
                 player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("allowed")), 1, 1);
-                player.sendMessage(Message.fixColor("&7(Silent) &bbuild has been &3disabled&7."));
+                player.sendMessage(Message.fixColor("&7(Silent) &bBuild has been &3disabled&7."));
+                EssentialCommands.getInstance().saveConfig();
             }
             default -> {
                 player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-                player.sendMessage(Message.fixColor("&7(Silent) &bunknown build status try again&7."));
+                player.sendMessage(Message.fixColor("&7(Silent) &bUnknown build status try again&7."));
             }
         }
         return true;

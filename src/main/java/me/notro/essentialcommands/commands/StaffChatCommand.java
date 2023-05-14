@@ -33,11 +33,9 @@ public class StaffChatCommand implements CommandExecutor {
             return false;
         }
 
-        String message = Message.fixColor("&7[&b&lEssential Commands&7] &7[&3Staff Chat&7] &3" + player.getName() + " &8>> &7");
+        String message = Message.fixColor("&7(Silent) &7[&3Staff Chat&7] &3" + player.getName() + " &b:");
 
-        for (String i : args) {
-            message = message + i + " ";
-        }
+        for (String i : args) message = message + i + " ";
 
         String finalMessage = message;
         Bukkit.getOnlinePlayers().forEach(onlinePlayers -> {

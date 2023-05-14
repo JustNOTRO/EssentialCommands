@@ -25,10 +25,10 @@ public class FlyCommand implements CommandExecutor {
             player.sendMessage(Message.fixColor(Message.NO_PERMISSION.getDefaultMessage()));
             return false;
         }
-        String isEnabled = player.getAllowFlight() ? Message.fixColor("&3disabled") : Message.fixColor("&3enabled");
+        String isEnabled = player.getAllowFlight() ? Message.fixColor("&3Disabled") : Message.fixColor("&3Enabled");
         player.setAllowFlight(!player.getAllowFlight());
         player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("allowed")), 1, 1);
-        player.sendMessage(Message.fixColor("&7(Silent) &bflight has been " + isEnabled + "&7."));
+        player.sendMessage(Message.fixColor("&7(Silent) &bFlight has been " + isEnabled + "&7."));
         return true;
     }
 }

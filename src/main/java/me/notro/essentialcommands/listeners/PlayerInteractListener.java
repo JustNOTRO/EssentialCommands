@@ -1,7 +1,9 @@
 package me.notro.essentialcommands.listeners;
 
+import lombok.NonNull;
 import me.notro.essentialcommands.EssentialCommands;
-import me.notro.essentialcommands.systems.BuildMode;
+import me.notro.essentialcommands.utils.ItemStackCreationUtils;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.configuration.ConfigurationSection;
@@ -10,6 +12,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
 public class PlayerInteractListener implements Listener {
@@ -33,8 +36,22 @@ public class PlayerInteractListener implements Listener {
     @EventHandler
     public void onPlayerBuild(PlayerInteractEvent event) {
         ConfigurationSection soundSection = EssentialCommands.getInstance().getConfig().getConfigurationSection("sound.commands");
+        ConfigurationSection buildSection = EssentialCommands.getInstance().getConfig().getConfigurationSection("build");
         Player player = event.getPlayer();
 
-        if (BuildMode.playersBuilding.contains(player.getUniqueId())) event.setCancelled(true);
+        if (!buildSection.getStringList("players-building").contains(player.getName())) event.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onPlayerClick(PlayerInteractEvent event) {
+        Player player = event.getPlayer();
+        @NonNull ItemStack teleportSword = ItemStackCreationUtils.createTeleportSword();
+        Action action = event.getAction();
+
+        if (!action.equals(Action.RIGHT_CLICK_AIR)) return;
+        if (!event.getItem().getItemMeta().equals(teleportSword.getItemMeta())) return;
+
+        Location location = player.getEyeLocation().add(5, 2, 0);
+        player.teleport(location);
     }
 }

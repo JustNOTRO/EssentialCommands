@@ -11,6 +11,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BanCommand implements CommandExecutor {
 
     @Override
@@ -29,31 +32,35 @@ public class BanCommand implements CommandExecutor {
         }
 
         if (args.length < 2) {
-            sender.sendMessage(Message.fixColor("&7(Silent) &cusage&7: &b/ban <player> <reason>"));
+            sender.sendMessage(Message.fixColor("&7(Silent) &cUsage&7: &b/ban <player> <reason>"));
             return false;
         }
 
-        Player target = Bukkit.getPlayer(args[0]);
-        OfflinePlayer offlineTarget = Bukkit.getOfflinePlayer(args[0]);
-
-
-        String reason = Message.fixColor("&cYou have been banned from this server for the reason: ");
+        OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
+        String reason = " ";
 
         for (int i = 1; i < args.length; i++)
-            reason = reason + args[i] + " ";
+            reason = reason + args[i];
 
-        try {
-            sender.getServer().getBanList(BanList.Type.NAME).addBan(String.valueOf(offlineTarget.getUniqueId()), reason, null, null);
-            EssentialCommands.getInstance().saveConfig();
-        } catch (NullPointerException exception) {
+        String message = Message.fixColor("&cYou are banned from this server reason:" + reason + "&7.");
 
+        if (Bukkit.getPlayerExact(args[0]) != null) {
+            Player playerTarget = Bukkit.getPlayerExact(args[0]);
+            playerTarget.kickPlayer(message);
         }
 
-        target.kickPlayer(reason);
         sender.getServer().getBanList(BanList.Type.NAME).addBan(String.valueOf(target.getUniqueId()), reason, null, null);
+
+        List<String> list = punishmentSection.getStringList("players");
+        if (list.isEmpty()) punishmentSection.set("players", new ArrayList<>());
+        list.add(target.getUniqueId().toString());
+
+        punishmentSection.set("players", list);
+        punishmentSection.set("message", message);
         punishmentSection.set("reason", reason);
-        punishmentSection.set("players", target.getUniqueId().toString());
+
         EssentialCommands.getInstance().saveConfig();
+        sender.sendMessage(Message.fixColor("&7(Silent) &b" + sender.getName() + " &3banned &b" + target.getName() + "&7."));
         return true;
     }
 }

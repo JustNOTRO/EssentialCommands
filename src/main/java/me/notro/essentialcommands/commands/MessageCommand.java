@@ -27,9 +27,9 @@ public class MessageCommand implements CommandExecutor {
             return false;
         }
 
-        if (args.length == 0) {
-            player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-            player.sendMessage(Message.fixColor(Message.NO_ARGUMENTS_PROVIDED.getDefaultMessage()));
+        if (args.length < 2) {
+            player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")),1 , 1);
+            player.sendMessage(Message.fixColor("&cUsage&7: &b/msg <player> <message>"));
             return false;
         }
 
@@ -38,12 +38,6 @@ public class MessageCommand implements CommandExecutor {
         if (target == null) {
             player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")),1 , 1);
             player.sendMessage(Message.fixColor(Message.NO_PLAYER_EXISTENCE.getDefaultMessage()));
-            return false;
-        }
-
-        if (args.length < 2) {
-            player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")),1 , 1);
-            player.sendMessage(Message.fixColor("&cusage&7: &b/<msg> <player> <message>"));
             return false;
         }
 
