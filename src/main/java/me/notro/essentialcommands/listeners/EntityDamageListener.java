@@ -11,7 +11,8 @@ public class EntityDamageListener implements Listener {
 
     @EventHandler
     public void onPlayerGodMode(EntityDamageEvent event) {
-        ConfigurationSection godModeSection = EssentialCommands.getInstance().getConfig().getConfigurationSection("god");
+        ConfigurationSection godModeSection = EssentialCommands.getInstance().getConfig().getConfigurationSection("god-mode");
+
         if (!(event.getEntity() instanceof Player player)) return;
         if (godModeSection.getStringList("players").contains(player.getName())) event.setCancelled(true);
     }

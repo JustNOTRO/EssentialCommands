@@ -1,7 +1,7 @@
 package me.notro.essentialcommands.commands;
 
 import me.notro.essentialcommands.EssentialCommands;
-import me.notro.essentialcommands.utils.Message;
+import me.notro.essentialcommands.utils.MessageUtility;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
@@ -10,23 +10,20 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MuteCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        ConfigurationSection soundSection = EssentialCommands.getInstance().getConfig().getConfigurationSection("sound.commands");
-        ConfigurationSection punishmentSection = EssentialCommands.getInstance().getConfig().getConfigurationSection("punishments.mute");
 
         if (!sender.hasPermission("essentials.mute")) {
-            sender.sendMessage(Message.fixColor(Message.NO_PERMISSION.getDefaultMessage()));
+            sender.sendMessage(MessageUtility.fixColor(MessageUtility.NO_PERMISSION.getDefaultMessage()));
             return false;
         }
 
         if (args.length < 2) {
-            sender.sendMessage(Message.fixColor("&7(Silent) &cUsage&7: &b/mute <player> <reason>"));
+            sender.sendMessage(MessageUtility.fixColor("&7(Silent) &cUsage&7: &b/mute <player> <reason>"));
             return false;
         }
 
@@ -38,15 +35,15 @@ public class MuteCommand implements CommandExecutor {
             reason = reason + args[i];
         }
 
-        String message = Message.fixColor("&cYou have been muted by &3" + sender.getName() + " &cfor the reason:" + reason + "&7.");
+        String message = MessageUtility.fixColor("&cYou have been muted by &3" + sender.getName() + " &cfor the reason:" + reason + "&7.");
 
         if (Bukkit.getPlayer(args[0]) != null) {
             Player myTarget = Bukkit.getPlayer(args[0]);
             myTarget.sendMessage(message);
         }
 
+        ConfigurationSection punishmentSection = EssentialCommands.getInstance().getConfig().getConfigurationSection("punishments.mute");
         List<String> list = punishmentSection.getStringList("players");
-        if (list.isEmpty()) punishmentSection.set("players", new ArrayList<>());
         list.add(target.getUniqueId().toString());
 
         punishmentSection.set("players", list);
@@ -54,7 +51,7 @@ public class MuteCommand implements CommandExecutor {
         punishmentSection.set("reason", reason);
 
         EssentialCommands.getInstance().saveConfig();
-        sender.sendMessage(Message.fixColor("&7(Silent) &3" + sender.getName() + " &bmuted &3" + target.getName() + "&7."));
+        sender.sendMessage(MessageUtility.fixColor("&7(Silent) &3" + sender.getName() + " &bmuted &3" + target.getName() + "&7."));
         return true;
     }
 }

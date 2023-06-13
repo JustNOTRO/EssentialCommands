@@ -1,6 +1,6 @@
 package me.notro.essentialcommands.listeners;
 
-import me.notro.essentialcommands.utils.Message;
+import me.notro.essentialcommands.utils.MessageUtility;
 import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -13,9 +13,9 @@ public class InventoryClickListener implements Listener {
     public void onPlayerInventoryClickEvent(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
 
-        if (!player.getOpenInventory().getTitle().equalsIgnoreCase(Message.fixColor("&cParticle Wizard"))) return;
-        event.setCancelled(true);
+        if (!player.getOpenInventory().getTitle().equalsIgnoreCase(MessageUtility.fixColor("&cParticle Wizard"))) return;
 
+        event.setCancelled(true);
         player.getWorld().spawnParticle(Particle.SNOWBALL, player.getLocation(), 0, 0, 10, 1);
         player.closeInventory();
     }

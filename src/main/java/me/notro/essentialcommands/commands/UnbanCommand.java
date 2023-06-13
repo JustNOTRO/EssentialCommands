@@ -1,7 +1,7 @@
 package me.notro.essentialcommands.commands;
 
 import me.notro.essentialcommands.EssentialCommands;
-import me.notro.essentialcommands.utils.Message;
+import me.notro.essentialcommands.utils.MessageUtility;
 import org.bukkit.BanList;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -14,31 +14,33 @@ public class UnbanCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        ConfigurationSection soundSection = EssentialCommands.getInstance().getConfig().getConfigurationSection("sound.commands");
-        ConfigurationSection punishmentSection = EssentialCommands.getInstance().getConfig().getConfigurationSection("punishments.ban");
 
         if (!sender.hasPermission("essentials.unban")) {
-            sender.sendMessage(Message.fixColor(Message.NO_PERMISSION.getDefaultMessage()));
+            sender.sendMessage(MessageUtility.fixColor(MessageUtility.NO_PERMISSION.getDefaultMessage()));
             return false;
         }
 
         if (args.length == 0) {
-            sender.sendMessage(Message.fixColor(Message.NO_ARGUMENTS_PROVIDED.getDefaultMessage()));
+            sender.sendMessage(MessageUtility.fixColor(MessageUtility.NO_ARGUMENTS_PROVIDED.getDefaultMessage()));
             return false;
         }
 
         OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
+        ConfigurationSection punishmentSection = EssentialCommands.getInstance().getConfig().getConfigurationSection("punishments.ban");
 
-        try {
-            sender.getServer().getBanList(BanList.Type.NAME).pardon(String.valueOf(target.getUniqueId()));
-        } catch (NullPointerException exception) {
-            sender.sendMessage(Message.fixColor("&7(Silent) &cPlayer does not exist&7."));
+        BanList banList = sender.getServer().getBanList(BanList.Type.NAME);
+
+        if (!banList.isBanned(target.getName())) {
+            sender.sendMessage(MessageUtility.fixColor("&3" + target.getName() + " &cis not banned&7."));
             return false;
         }
-        punishmentSection.set("reason", null);
+
         punishmentSection.set("players", null);
+        punishmentSection.set("message", null);
+        punishmentSection.set("reason", null);
+        banList.pardon(target.getUniqueId().toString());
         EssentialCommands.getInstance().saveConfig();
-        sender.sendMessage(Message.fixColor("&7(Silent) &3" + sender.getName() + " &bunbanned &3" + target.getName() + "&7."));
+        sender.sendMessage(MessageUtility.fixColor("&7(Silent) &3" + sender.getName() + " &bunbanned &3" + target.getName() + "&7."));
         return true;
     }
 }

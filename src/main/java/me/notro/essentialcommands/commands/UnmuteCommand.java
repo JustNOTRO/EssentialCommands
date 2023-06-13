@@ -1,8 +1,7 @@
 package me.notro.essentialcommands.commands;
 
-import lombok.NonNull;
 import me.notro.essentialcommands.EssentialCommands;
-import me.notro.essentialcommands.utils.Message;
+import me.notro.essentialcommands.utils.MessageUtility;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
@@ -15,21 +14,19 @@ public class UnmuteCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        ConfigurationSection soundSection = EssentialCommands.getInstance().getConfig().getConfigurationSection("sound.commands");
-        ConfigurationSection punishmentSection = EssentialCommands.getInstance().getConfig().getConfigurationSection("punishments.mute");
 
         if (!sender.hasPermission("essentials.unmute")) {
-            sender.sendMessage(Message.fixColor(Message.NO_PERMISSION.getDefaultMessage()));
+            sender.sendMessage(MessageUtility.fixColor(MessageUtility.NO_PERMISSION.getDefaultMessage()));
             return false;
         }
 
         if (args.length == 0) {
-            sender.sendMessage(Message.fixColor(Message.NO_ARGUMENTS_PROVIDED.getDefaultMessage()));
+            sender.sendMessage(MessageUtility.fixColor(MessageUtility.NO_ARGUMENTS_PROVIDED.getDefaultMessage()));
             return false;
         }
 
         if (args.length > 1) {
-            sender.sendMessage(Message.fixColor("&7(Silent) &cUsage&7: &b/unmute <player>"));
+            sender.sendMessage(MessageUtility.fixColor("&7(Silent) &cUsage&7: &b/unmute <player>"));
             return false;
         }
 
@@ -37,12 +34,15 @@ public class UnmuteCommand implements CommandExecutor {
 
         if (Bukkit.getPlayer(args[0]) != null) {
             Player myTarget = Bukkit.getPlayer(args[0]);
-            myTarget.sendMessage(Message.fixColor("&aYou have been unmuted by &3" + sender.getName() + "&7."));
+            myTarget.sendMessage(MessageUtility.fixColor("&aYou have been unmuted by &3" + sender.getName() + "&7."));
         }
+
+        ConfigurationSection punishmentSection = EssentialCommands.getInstance().getConfig().getConfigurationSection("punishments.mute");
+
         punishmentSection.set("reason", null);
         punishmentSection.set("players", null);
         EssentialCommands.getInstance().saveConfig();
-        sender.sendMessage(Message.fixColor("&7(Silent) &3" + sender.getName() + "&b Unmuted &3" + target.getName() + "&7."));
+        sender.sendMessage(MessageUtility.fixColor("&7(Silent) &3" + sender.getName() + "&b Unmuted &3" + target.getName() + "&7."));
         return true;
     }
 }

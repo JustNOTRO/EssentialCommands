@@ -5,16 +5,7 @@ launch-pad:
     enabled: true
     velocity-strength: 1
 
-sound:
-  commands:
-    allowed: BLOCK_NOTE_BLOCK_PLING
-    rejected: BLOCK_NOTE_BLOCK_BASS
-    launch-pad: ENTITY_EGG_THROW
-
 spawn:
-  x:
-  y:
-  z:
 
 punishments:
   ban:
@@ -27,19 +18,31 @@ punishments:
     message:
     reason:
 
-vanish:
+vanish-mode:
   players-vanished:
-  staff-see: true
   pickup-items: false
 
-god:
+god-mode:
   players:
 
-freeze:
-  players-freezed:
+freeze-mode:
+  players:
 
 build:
   players-building:
 
-mutechat:
+mute-chat:
   chat-muted: false
+
+maintenance:
+  state:
+
+reports:
+  players:
+
+jail:
+  players:
+
+social-spies:
+  spying-players:
+  targeted-players:

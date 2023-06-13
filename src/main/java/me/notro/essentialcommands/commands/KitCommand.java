@@ -1,7 +1,7 @@
 package me.notro.essentialcommands.commands;
 
 import me.notro.essentialcommands.systems.KitManager;
-import me.notro.essentialcommands.utils.Message;
+import me.notro.essentialcommands.utils.MessageUtility;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -19,17 +19,17 @@ public class KitCommand implements CommandExecutor, TabCompleter {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
         if (!(sender instanceof  Player player)) {
-            sender.sendMessage(Message.fixColor(Message.NO_SENDER_EXECUTOR.getDefaultMessage()));
+            sender.sendMessage(MessageUtility.fixColor(MessageUtility.NO_SENDER_EXECUTOR.getDefaultMessage()));
             return false;
         }
 
         if (!player.hasPermission("essentials.kit")) {
-            player.sendMessage(Message.fixColor(Message.NO_PERMISSION.getDefaultMessage()));
+            player.sendMessage(MessageUtility.fixColor(MessageUtility.NO_PERMISSION.getDefaultMessage()));
             return false;
         }
 
         if (args.length == 0) {
-            player.sendMessage(Message.fixColor("&cUsage&7: &b/kit <kit-type>"));
+            player.sendMessage(MessageUtility.fixColor("&cUsage&7: &b/kit <kit-type>"));
             return false;
         }
 
@@ -38,7 +38,7 @@ public class KitCommand implements CommandExecutor, TabCompleter {
         Material[] materials = new Material[4];
 
         if (!player.getInventory().isEmpty()) {
-            player.sendMessage(Message.fixColor("&cYou need to clear your inventory first!"));
+            player.sendMessage(MessageUtility.fixColor("&cYou need to clear your inventory first!"));
             return false;
         }
 
@@ -51,8 +51,8 @@ public class KitCommand implements CommandExecutor, TabCompleter {
                 materials[1] = Material.IRON_LEGGINGS;
                 materials[0] = Material.IRON_BOOTS;
 
-                kitManager.createKit(casualKit, materials, Message.fixColor("&eCasual Kit"), Message.fixColor("&eThis kit is for casuals haha!"), Material.DIAMOND_SWORD);
-                player.sendMessage(Message.fixColor("&bKit &3Casual &bhas been granted&7."));
+                kitManager.createKit(casualKit, materials, MessageUtility.fixColor("&eCasual Kit"), MessageUtility.fixColor("&eThis kit is for casuals haha!"), Material.DIAMOND_SWORD);
+                player.sendMessage(MessageUtility.fixColor("&bKit &3Casual &bhas been granted&7."));
             }
             case "strong" -> {
                 materials[3] = Material.NETHERITE_HELMET;
@@ -60,10 +60,11 @@ public class KitCommand implements CommandExecutor, TabCompleter {
                 materials[1] = Material.NETHERITE_LEGGINGS;
                 materials[0] = Material.NETHERITE_BOOTS;
 
-                kitManager.createKit(strongKit, materials, Message.fixColor("&4Strong Kit"), Message.fixColor("&cThat kit is very strong!"), Material.NETHERITE_SWORD);
-                player.sendMessage(Message.fixColor("bKit &3Strong &bhas been granted&7."));
+                kitManager.createKit(strongKit, materials, MessageUtility.fixColor("&4Strong Kit"), MessageUtility.fixColor("&cThat kit is very strong!"), Material.NETHERITE_SWORD);
+                player.sendMessage(MessageUtility.fixColor("bKit &3Strong &bhas been granted&7."));
             }
-            default -> player.sendMessage(Message.fixColor("&cUsage&7: &b/kit <kit-type>"));
+
+            default -> player.sendMessage(MessageUtility.fixColor("&cUsage&7: &b/kit <kit-type>"));
         }
         return true;
     }

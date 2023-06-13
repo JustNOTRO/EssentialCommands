@@ -1,16 +1,16 @@
 package me.notro.essentialcommands.systems;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Setter;
+import lombok.NonNull;
+import lombok.AllArgsConstructor;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.*;
 
-@NonNull
 @Getter
 @Setter
+@NonNull
 @AllArgsConstructor
 public class ScoreboardManager {
 
@@ -21,7 +21,6 @@ public class ScoreboardManager {
         scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
 
         Objective objective = scoreboard.registerNewObjective(name, criteria, displayName);
-        objective.setDisplayName(displayName);
         objective.setDisplaySlot(displaySlot);
 
         return scoreboard;
@@ -29,8 +28,8 @@ public class ScoreboardManager {
 
     public void scoreboardScore(String objectiveName, String scoreName, int scoreNumber) {
         Objective objective = scoreboard.getObjective(objectiveName);
-
         Score score = objective.getScore(scoreName);
+
         score.setScore(scoreNumber);
     }
 }

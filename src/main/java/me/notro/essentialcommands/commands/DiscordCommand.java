@@ -1,6 +1,6 @@
 package me.notro.essentialcommands.commands;
 
-import me.notro.essentialcommands.utils.Message;
+import me.notro.essentialcommands.utils.MessageUtility;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -12,15 +12,16 @@ public class DiscordCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
         if (!(sender instanceof Player player)) {
-            sender.sendMessage(Message.NO_SENDER_EXECUTOR.getDefaultMessage());
+            sender.sendMessage(MessageUtility.NO_SENDER_EXECUTOR.getDefaultMessage());
             return false;
         }
 
         if (args.length > 0) {
-            player.sendMessage(Message.fixColor("&cUsage&7: &b/discord"));
+            player.sendMessage(MessageUtility.fixColor("&cUsage&7: &b/discord"));
             return false;
         }
-        player.sendMessage(Message.fixColor("&bDiscord: https://discord.gg/HFawq8ZNGp"));
+
+        player.sendMessage(MessageUtility.fixColor("&bDiscord&7: https://discord.gg/HFawq8ZNGp"));
         return true;
     }
 }

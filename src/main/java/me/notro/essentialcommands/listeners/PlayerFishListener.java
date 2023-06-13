@@ -1,22 +1,23 @@
 package me.notro.essentialcommands.listeners;
 
-import me.notro.essentialcommands.utils.ItemStackCreationUtils;
-import me.notro.essentialcommands.utils.Message;
+import me.notro.essentialcommands.models.ItemBuilder;
+import me.notro.essentialcommands.utils.MessageUtility;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerFishEvent;
-import org.bukkit.inventory.ItemStack;
 
 public class PlayerFishListener implements Listener {
 
     @EventHandler
     public void onPlayerFish(PlayerFishEvent event) {
         Player player = event.getPlayer();
-        ItemStack itemStack = ItemStackCreationUtils.createGrapplingHook();
+        ItemBuilder grapplingHook = new ItemBuilder(Material.FISHING_ROD);
+        grapplingHook.setDisplayName("&bGRAPPLING HOOK");
 
-        if (!itemStack.getItemMeta().getDisplayName().equalsIgnoreCase(Message.fixColor("&aGrappling Hook"))) return;
+        if (!grapplingHook.getItemMeta().getDisplayName().equalsIgnoreCase(MessageUtility.fixColor("&bGRAPPLING HOOK"))) return;
         if (!event.getState().equals(PlayerFishEvent.State.REEL_IN)) return;
 
         Location locationThrow = player.getLocation();

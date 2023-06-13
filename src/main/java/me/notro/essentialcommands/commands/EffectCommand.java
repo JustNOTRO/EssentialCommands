@@ -1,14 +1,11 @@
 package me.notro.essentialcommands.commands;
 
-import me.notro.essentialcommands.EssentialCommands;
-import me.notro.essentialcommands.utils.Message;
+import me.notro.essentialcommands.utils.MessageUtility;
 import org.bukkit.Bukkit;
-import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -20,77 +17,63 @@ public class EffectCommand implements CommandExecutor, TabCompleter {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        ConfigurationSection soundSection = EssentialCommands.getInstance().getConfig().getConfigurationSection("sound.commands");
 
         if (!(sender instanceof Player player)) {
-            sender.sendMessage(Message.fixColor(Message.NO_SENDER_EXECUTOR.getDefaultMessage()));
+            sender.sendMessage(MessageUtility.fixColor(MessageUtility.NO_SENDER_EXECUTOR.getDefaultMessage()));
             return false;
         }
 
         if (!player.hasPermission("essentials.effect")) {
-            player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-            player.sendMessage(Message.fixColor(Message.NO_PERMISSION.getDefaultMessage()));
+            player.sendMessage(MessageUtility.fixColor(MessageUtility.NO_PERMISSION.getDefaultMessage()));
             return false;
         }
 
         if (args.length == 0) {
-            player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-            player.sendMessage(Message.NO_ARGUMENTS_PROVIDED.getDefaultMessage());
+            player.sendMessage(MessageUtility.NO_ARGUMENTS_PROVIDED.getDefaultMessage());
             return false;
         }
 
         switch (args[0].toLowerCase()) {
-
             case "give" -> {
-
                 if (args.length < 5) {
-                    player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-                    player.sendMessage(Message.fixColor("&7(Silent) &cUsage&7: &b/effect <give/clear> <player> <effectType> <duration> <amplifier>"));
+                    player.sendMessage(MessageUtility.fixColor("&7(Silent) &cUsage&7: &b/effect <give/clear> <player> <effectType> <duration> <amplifier>"));
                     return false;
                 }
 
                 Player target = Bukkit.getPlayer(args[1]);
 
                 if (target == null) {
-                    player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-                    player.sendMessage(Message.fixColor(Message.NO_PLAYER_EXISTENCE.getDefaultMessage()));
+                    player.sendMessage(MessageUtility.fixColor(MessageUtility.NO_PLAYER_EXISTENCE.getDefaultMessage()));
                     return false;
                 }
 
                 PotionEffectType potionEffectType = PotionEffectType.getByName(args[2]);
 
                 if (potionEffectType == null) {
-                    player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-                    player.sendMessage(Message.fixColor("&7(Silent) &cEffect does not exist."));
+                    player.sendMessage(MessageUtility.fixColor("&7(Silent) &cEffect does not exist&7."));
                     return false;
                 }
-
-                int duration;
-                int amplifier;
 
                 try {
-                    duration = Integer.parseInt(args[3]);
-                    amplifier = Integer.parseInt(args[4]);
+                    int duration = Integer.parseInt(args[3]);
+                    int amplifier = Integer.parseInt(args[4]);
                     target.addPotionEffect(new PotionEffect(potionEffectType, duration, amplifier));
                 } catch (NumberFormatException exception) {
-                    sender.sendMessage(Message.fixColor("&7(Silent) &8>> &cDuration and amplifier needs to be numeric&7."));
+                    sender.sendMessage(MessageUtility.fixColor("&7(Silent) &8>> &cDuration and amplifier needs to be numeric&7."));
                     return false;
                 }
-                player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("allowed")), 1, 1);
-                player.sendMessage(Message.fixColor("&7(Silent) &bAdded &3" + target.getName() + "&b " + potionEffectType.getName().toLowerCase() + "&7."));
+                player.sendMessage(MessageUtility.fixColor("&7(Silent) &bAdded &3" + target.getName() + "&b " + potionEffectType.getName().toLowerCase() + "&7."));
             }
-            case "clear" -> {
 
+            case "clear" -> {
                 if (player.getActivePotionEffects().isEmpty()) {
-                    player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-                    player.sendMessage(Message.fixColor("&7(Silent) &cYou don't have any active potions&7."));
+                    player.sendMessage(MessageUtility.fixColor("&7(Silent) &cYou don't have any active potions&7."));
                     return false;
                 }
 
                 player.getActivePotionEffects().forEach(activePotion -> {
                     player.removePotionEffect(activePotion.getType());
-                    player.playSound(player.getLocation(), Sound.valueOf(soundSection.getString("allowed")), 1, 1);
-                    player.sendMessage(Message.fixColor("&7(Silent) &bremoved &3" + player.getName() + "&b " + activePotion.getType().getName().toLowerCase() + "&7."));
+                    player.sendMessage(MessageUtility.fixColor("&7(Silent) &bremoved &3" + player.getName() + "&b " + activePotion.getType().getName().toLowerCase() + "&7."));
                 });
             }
         }

@@ -12,7 +12,7 @@ public class EntityPickupItemListener implements Listener {
     @EventHandler
     public void onPlayerPickupItems(EntityPickupItemEvent event) {
         ConfigurationSection vanishSection = EssentialCommands.getInstance().getConfig().getConfigurationSection("vanish");
-        if (!(event.getEntity() instanceof Player player)) return;
+        if (!(event.getEntity() instanceof Player)) return;
         if (!vanishSection.getBoolean("pickup-items")) event.setCancelled(true);
     }
 }

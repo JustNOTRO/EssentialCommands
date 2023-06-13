@@ -17,17 +17,19 @@ commands:
     description: Set player to invincible.
 
   vanish:
+    aliases: v
     description: Set player to invisible.
 
   clear:
+    aliases: ci
     description: Clears Inventory.
 
   give:
     description: Give an item to a player.
 
   teleport:
-    description: Teleports to a player.
     aliases: tp
+    description: Teleports to a player.
 
   setSpawn:
     description: Set world spawn.
@@ -45,14 +47,14 @@ commands:
     description: Freeze/Unfreeze a player.
 
   gamemode:
-    description: Set a certain game mode to a player.
     aliases: gm
+    description: Set a certain game mode to a player.
 
   weather:
-    description: Set server weather
+    description: Set server weather.
 
   kit:
-    description: Set a kit for a player
+    description: Set a kit for a player.
 
   push:
     description: Push a player to a certain distance.
@@ -64,11 +66,11 @@ commands:
     description: Set an enchantment to a certain item.
 
   staffchat:
-    description: Send a message to the staff members only.
     aliases: sc
+    description: Send a message to the staff members only.
 
   build:
-    description: Change build mode to a player
+    description: Change build mode to a player.
 
   tpall:
     description: Teleports all players online.
@@ -77,8 +79,8 @@ commands:
     description: Kill all the players.
 
   wear:
+    aliases: equip, hat
     description: Wear a certain item.
-    aliases: equip
 
   kick:
     description: Kick a player from the server.
@@ -87,8 +89,8 @@ commands:
     description: Give a player certain effect.
 
   ban:
-    description: Ban a player.
     aliases: b
+    description: Ban a player.
 
   unban:
     description: Unban a player.
@@ -100,8 +102,8 @@ commands:
     description: Nuke a player.
 
   mute:
-    description: Mute a player.
     aliases: m
+    description: Mute a player.
 
   unmute:
     description: Unmute a player.
@@ -113,29 +115,120 @@ commands:
     description: Mute the chat.
 
   msg:
+    aliases: whisper
     description: Message a player.
 
   particle:
-    description: Opens a particle gui.
+    description: Opens a particle GUI.
 
   summon:
     description: Summons an entity to a player.
 
-  tpbow:
-    description: Summons a Teleport Bow
-
-  tpsword:
-    description: Teleport to a certain location by pressing Right click.
-
   hologram:
-    description: Display an awesome hologram by your choice!
+    description: Display an awesome hologram by your choice.
 
   smite:
-    description: Smite a player with a strong lightning
+    description: Smite a player with a strong lightning.
 
   discord:
-    description: Generates a link of discord
+    description: Generates a link of a discord server.
 
   sign:
-    description: Gives a player sign
     aliases: i
+    description: Gives a player a sign.
+
+  nick:
+    aliases: disguise
+    description: Set a player new name.
+
+  tempban:
+    aliases: tban
+    description: Tempban a player for a certain duration.
+
+  kill:
+    description: Kill a player.
+
+  tempmute:
+    aliases: tmute
+    description: Tempmute a player for a certain duration.
+
+  broadcast:
+    aliases: bc
+    description: Broadcast a message to all the server.
+
+  troll:
+    description: Troll a player.
+
+  rtp:
+    aliases: jtp
+    description: Randomly teleport to an online player.
+
+  setwarp:
+    description: Set a new warp from your current position.
+
+  warp:
+    description: Teleport to the named warp.
+
+  unwarp:
+    description: Removes a spcified warp.
+
+  sudo:
+    description: Send a message as an other player.
+
+  invsee:
+    description: Open's a target's inventory.
+
+  firework:
+    description: Send a firework to a player.
+
+  shoot:
+    description: Shoot a fireball at a player.
+
+  staffhelp:
+    aliases: sh
+    description: Send a help message to an online staff.
+
+  top:
+    description: Sent a player to the top block in their current location.
+
+  experience:
+    description: Add a player experience levels.
+
+  config:
+    description: Reloads the default config.
+
+  tphere:
+    description: Tp a targeted player to sender.
+
+  kickall:
+    description: Kicks all players.
+
+  maintenance:
+    description: Sets maintenance mode.
+
+  report:
+    description: Report a player.
+
+  reports:
+    description: Show reports list.
+
+  list:
+    description: Represent a list of online players.
+
+  setjail:
+    description: Set a jail location.
+
+  jail:
+    description: Send a targeted player to the jail.
+
+  rules:
+    description: Display the current rules of the server, can also add/remove rules.
+
+  giveall:
+    description: Give a certain item to all players.
+
+  socialmedia:
+    description: Sends a social media information.
+
+  socialspy:
+    description: Social Spy on all players.

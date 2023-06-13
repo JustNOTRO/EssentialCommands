@@ -1,6 +1,6 @@
 package me.notro.essentialcommands.commands;
 
-import me.notro.essentialcommands.utils.Message;
+import me.notro.essentialcommands.utils.MessageUtility;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -17,12 +17,12 @@ public class SummonCommand implements CommandExecutor, TabCompleter {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
         if (!sender.hasPermission("essentials.summon")) {
-            sender.sendMessage(Message.fixColor(Message.NO_PERMISSION.getDefaultMessage()));
+            sender.sendMessage(MessageUtility.fixColor(MessageUtility.NO_PERMISSION.getDefaultMessage()));
             return false;
         }
 
         if (args.length < 3) {
-            sender.sendMessage(Message.fixColor("&7(Silent) &cUsage&7: &b/summon <entity> <player> <amount>"));
+            sender.sendMessage(MessageUtility.fixColor("&7(Silent) &cUsage&7: &b/summon <entity> <player> <amount>"));
             return false;
         }
 
@@ -31,25 +31,25 @@ public class SummonCommand implements CommandExecutor, TabCompleter {
         int amount;
 
         if (entityType == null) {
-            sender.sendMessage(Message.fixColor("&7(Silent) &centity does not exist&7."));
+            sender.sendMessage(MessageUtility.fixColor("&7(Silent) &centity does not exist&7."));
             return false;
         }
 
         if (target == null) {
-            sender.sendMessage(Message.fixColor(Message.NO_PLAYER_EXISTENCE.getDefaultMessage()));
+            sender.sendMessage(MessageUtility.fixColor(MessageUtility.NO_PLAYER_EXISTENCE.getDefaultMessage()));
             return false;
         }
 
         try {
             amount = Integer.parseInt(args[2]);
         } catch (NumberFormatException exception) {
-            sender.sendMessage(Message.fixColor("&7(Silent) &cAmount needs to be numeric&7."));
+            sender.sendMessage(MessageUtility.fixColor("&7(Silent) &cAmount needs to be numeric&7."));
             return false;
         }
 
         for (int i = 0; i < amount; i++)
             target.getWorld().spawnEntity(target.getLocation(), entityType);
-        sender.sendMessage(Message.fixColor("&7(Silent) &3" + sender.getName() + " &bsummoned &3" + entityType.getName() + " " + amount + "x" + " &3to &3" + target.getName() + "&b's location&7."));
+        sender.sendMessage(MessageUtility.fixColor("&7(Silent) &3" + sender.getName() + " &bsummoned &3" + entityType.getName() + " " + amount + "x" + " &3to &3" + target.getName() + "&b's location&7."));
         return true;
     }
 

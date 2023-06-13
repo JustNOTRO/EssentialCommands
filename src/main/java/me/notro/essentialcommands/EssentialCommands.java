@@ -3,8 +3,6 @@ package me.notro.essentialcommands;
 import me.notro.essentialcommands.listeners.*;
 import lombok.Getter;
 import me.notro.essentialcommands.commands.*;
-import me.notro.essentialcommands.utils.Message;
-import org.bukkit.Bukkit;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -21,7 +19,7 @@ public final class EssentialCommands extends JavaPlugin {
         saveDefaultConfig();
 
         // Plugin startup logic
-        Bukkit.getConsoleSender().sendMessage(Message.fixColor("&7[&b&lEssential Commands &7] &8>> &7is &aOnline."));
+        getLogger().info("has been Enabled.");
 
         //Spigot Commands
         getCommand("ban").setExecutor(new BanCommand());
@@ -35,7 +33,6 @@ public final class EssentialCommands extends JavaPlugin {
         getCommand("freeze").setExecutor(new FreezeCommand());
         getCommand("gamemode").setExecutor(new GamemodeCommand());
         getCommand("give").setExecutor(new GiveCommand());
-        getCommand("tpbow").setExecutor(new GiveTeleportBowCommand());
         getCommand("god").setExecutor(new GodCommand());
         getCommand("heal").setExecutor(new HealCommand());
         getCommand("hologram").setExecutor(new HologramCommand());
@@ -64,9 +61,36 @@ public final class EssentialCommands extends JavaPlugin {
         getCommand("mutechat").setExecutor(new MutechatCommand());
         getCommand("particle").setExecutor(new ParticleGUICommand());
         getCommand("summon").setExecutor(new SummonCommand());
-        getCommand("tpsword").setExecutor(new TeleportSwordCommand());
         getCommand("smite").setExecutor(new SmiteCommand());
         getCommand("sign").setExecutor(new SignCommand());
+        getCommand("nick").setExecutor(new NickCommand());
+        getCommand("kill").setExecutor(new KillCommand());
+        getCommand("broadcast").setExecutor(new BroadcastCommand());
+        getCommand("troll").setExecutor(new TrollCommand());
+        getCommand("rtp").setExecutor(new RandomTeleportCommand());
+        getCommand("setwarp").setExecutor(new SetWarpCommand());
+        getCommand("unwarp").setExecutor(new RemoveWarpCommand());
+        getCommand("sudo").setExecutor(new SudoCommand());
+        getCommand("invsee").setExecutor(new InvseeCommand());
+        getCommand("firework").setExecutor(new FireworkCommand());
+        getCommand("shoot").setExecutor(new ShootCommand());
+        getCommand("staffhelp").setExecutor(new StaffHelpCommand());
+        getCommand("top").setExecutor(new TopCommand());
+        getCommand("experience").setExecutor(new ExperienceCommand());
+        getCommand("config").setExecutor(new ReloadConfigCommand());
+        getCommand("tphere").setExecutor(new TphereCommand());
+        getCommand("kickall").setExecutor(new KickallCommand());
+        getCommand("maintenance").setExecutor(new MaintenanceCommand());
+        getCommand("report").setExecutor(new ReportCommand());
+        getCommand("reports").setExecutor(new ReportsCommand());
+        getCommand("list").setExecutor(new ListCommand());
+        getCommand("setjail").setExecutor(new SetJailCommand());
+        getCommand("jail").setExecutor(new JailCommand());
+        getCommand("rules").setExecutor(new RulesCommand());
+        getCommand("giveall").setExecutor(new GiveallCommand());
+        getCommand("socialmedia").setExecutor(new SocialMediaCommand());
+        getCommand("socialspy").setExecutor(new SocialSpyCommand());
+
 
         //Spigot Listeners
         getServer().getPluginManager().registerEvents(new AsyncPlayerChatListener(), this);
@@ -77,19 +101,19 @@ public final class EssentialCommands extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerInteractListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerMoveListener(), this);
-        getServer().getPluginManager().registerEvents(new PlayerPreLoginListener(), this);
+        getServer().getPluginManager().registerEvents(new AsyncPlayerPreLoginListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerQuitListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerRespawnListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerToggleFlightListener(), this);
-        getServer().getPluginManager().registerEvents(new ProjectileHitListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerFishListener(), this);
         getServer().getPluginManager().registerEvents(new EntityPickupItemListener(), this);
+        getServer().getPluginManager().registerEvents(new PlayerCommandPreprocessListener(), this);
     }
 
     @Override
     public void onDisable() {
         // Plugin shutdown logic
-        Bukkit.getConsoleSender().sendMessage(Message.fixColor("&7[&b&lEssential Commands &7] &8>> &7is &cOffline."));
+        getLogger().info("has been Disabled.");
     }
 
     public static class MetadataValues {

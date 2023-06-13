@@ -1,36 +1,34 @@
 package me.notro.essentialcommands.commands;
 
 import me.notro.essentialcommands.EssentialCommands;
-import me.notro.essentialcommands.utils.Message;
+import me.notro.essentialcommands.utils.MessageUtility;
 import org.bukkit.Bukkit;
-import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.entity.Player;
 
 public class MutechatCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        ConfigurationSection soundSection = EssentialCommands.getInstance().getConfig().getConfigurationSection("sound.commands");
-        ConfigurationSection muteChatSection = EssentialCommands.getInstance().getConfig().getConfigurationSection("mutechat");
 
         if (!sender.hasPermission("essentials.mutechat")) {
-            Message.playSound(sender, Sound.valueOf(soundSection.getString("rejected")), 1, 1);
-            sender.sendMessage(Message.fixColor(Message.NO_PERMISSION.getDefaultMessage()));
+            sender.sendMessage(MessageUtility.fixColor(MessageUtility.NO_PERMISSION.getDefaultMessage()));
             return false;
         }
 
+        ConfigurationSection muteChatSection = EssentialCommands.getInstance().getConfig().getConfigurationSection("mute-chat");
+
         if (!muteChatSection.getBoolean("chat-muted")) {
             muteChatSection.set("chat-muted", true);
-            Bukkit.broadcastMessage(Message.fixColor("&cChat has been silenced by &3" + sender.getName() + "&7."));
+            Bukkit.broadcastMessage(MessageUtility.fixColor("&cChat has been silenced by &3" + sender.getName() + "&7."));
             EssentialCommands.getInstance().saveConfig();
             return true;
         }
+
         muteChatSection.set("chat-muted", false);
-        Bukkit.broadcastMessage(Message.fixColor("&cChat has been unsilenced by &3" + sender.getName() + "&7."));
+        Bukkit.broadcastMessage(MessageUtility.fixColor("&cChat has been unsilenced by &3" + sender.getName() + "&7."));
         EssentialCommands.getInstance().saveConfig();
         return true;
     }
