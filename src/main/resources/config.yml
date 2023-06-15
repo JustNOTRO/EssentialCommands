@@ -6,6 +6,7 @@ launch-pad:
     velocity-strength: 1
 
 spawn:
+  location:
 
 punishments:
   ban:
@@ -41,8 +42,18 @@ reports:
   players:
 
 jail:
+  location:
   players:
 
 social-spies:
   spying-players:
   targeted-players:
+
+server-motd:
+  message:
+
+pvp-mode:
+  state:
+
+name-tag:
+  tag:

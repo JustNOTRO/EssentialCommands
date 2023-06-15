@@ -1,6 +1,6 @@
 package me.notro.essentialcommands.commands;
 
-import me.notro.essentialcommands.systems.KitManager;
+import me.notro.essentialcommands.managers.KitManager;
 import me.notro.essentialcommands.utils.MessageUtility;
 import org.bukkit.Material;
 import org.bukkit.command.Command;

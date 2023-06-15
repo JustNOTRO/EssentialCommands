@@ -28,7 +28,7 @@ public class GodCommand implements CommandExecutor {
         ConfigurationSection godModeSection = EssentialCommands.getInstance().getConfig().getConfigurationSection("god-mode");
         List<String> godModePlayers = godModeSection.getStringList("players");
 
-        if (!godModePlayers.contains(player.getName())) {
+        if (!godModePlayers.contains(player.getUniqueId().toString())) {
             godModePlayers.add(player.getUniqueId().toString());
             player.setInvulnerable(true);
             godModeSection.set("players", godModePlayers);

@@ -1,6 +1,6 @@
 package me.notro.essentialcommands.listeners;
 
-import me.notro.essentialcommands.models.ItemBuilder;
+import me.notro.essentialcommands.utils.ItemBuilder;
 import me.notro.essentialcommands.utils.MessageUtility;
 import org.bukkit.Location;
 import org.bukkit.Material;

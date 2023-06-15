@@ -1,6 +1,6 @@
 package me.notro.essentialcommands.commands;
 
-import me.notro.essentialcommands.systems.GamemodeManager;
+import me.notro.essentialcommands.managers.GamemodeManager;
 import me.notro.essentialcommands.utils.MessageUtility;
 import org.bukkit.GameMode;
 import org.bukkit.command.Command;

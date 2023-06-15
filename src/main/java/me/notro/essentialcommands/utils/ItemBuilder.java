@@ -1,6 +1,5 @@
-package me.notro.essentialcommands.models;
+package me.notro.essentialcommands.utils;
 
-import me.notro.essentialcommands.utils.MessageUtility;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;

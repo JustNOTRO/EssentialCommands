@@ -5,6 +5,7 @@ import me.notro.essentialcommands.utils.MessageUtility;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
 public class SpawnCommand implements CommandExecutor {
@@ -22,7 +23,8 @@ public class SpawnCommand implements CommandExecutor {
             return false;
         }
 
-        player.teleport(EssentialCommands.getInstance().getConfig().getLocation("spawn"));
+        ConfigurationSection spawnSection = EssentialCommands.getInstance().getConfig().getConfigurationSection("spawn");
+        player.teleport(spawnSection.getLocation("location"));
         EssentialCommands.getInstance().saveConfig();
         player.sendMessage(MessageUtility.fixColor("&7(Silent) &bTeleported to the &3Spawn&7."));
         return true;

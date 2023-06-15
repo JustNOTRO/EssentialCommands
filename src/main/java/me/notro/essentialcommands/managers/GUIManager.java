@@ -1,4 +1,4 @@
-package me.notro.essentialcommands.systems;
+package me.notro.essentialcommands.managers;
 
 import lombok.*;
 import org.bukkit.Bukkit;

@@ -137,10 +137,6 @@ commands:
     aliases: i
     description: Gives a player a sign.
 
-  nick:
-    aliases: disguise
-    description: Set a player new name.
-
   tempban:
     aliases: tban
     description: Tempban a player for a certain duration.
@@ -232,3 +228,22 @@ commands:
 
   socialspy:
     description: Social Spy on all players.
+
+  playsound:
+    aliases: ps
+    description: Play a certain sound.
+
+  motd:
+    description: Set a cool MOTD.
+
+  pvp:
+    description: Toggle Server pvp.
+
+  stafflist:
+    description: Presents all the online staff.
+
+  clearlag:
+    description: Clears all entities.
+
+  gravity:
+    description: Set a player gravity to true/false.

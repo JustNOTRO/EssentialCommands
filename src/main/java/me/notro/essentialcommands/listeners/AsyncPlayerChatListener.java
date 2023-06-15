@@ -41,20 +41,16 @@ public class AsyncPlayerChatListener implements Listener {
     @EventHandler
     public void onPlayerMention(AsyncPlayerChatEvent event) {
         Player target = event.getPlayer();
-        if (event.getMessage().equals(target.getName())) SoundsUtility.playSound(target, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
+
+        if (event.getMessage().equals(target.getName())) SoundsUtility.playSound(target, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1F, 1F);
     }
 
     @EventHandler
     public void onPlayerSocialSpy(AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
-        String[] args = event.getMessage().split(" ");
-
         ConfigurationSection socialSpySection = EssentialCommands.getInstance().getConfig().getConfigurationSection("social-spies");
         List<String> socialSpies = socialSpySection.getStringList("targeted-players");
-        StringBuilder stringBuilder = new StringBuilder();
 
-        for (String arg : args) stringBuilder.append(arg).append(" ");
-
-        if (socialSpies.contains(player.getUniqueId().toString())) player.sendMessage(MessageUtility.fixColor("&7[Social Spy] &c" + player.getName() + ": " + stringBuilder));
+        if (socialSpies.contains(player.getUniqueId().toString())) player.sendMessage(MessageUtility.fixColor("&7[Social Spy] &c" + player.getName() + ": " + event.getMessage()));
     }
 }

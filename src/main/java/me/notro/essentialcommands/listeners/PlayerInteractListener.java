@@ -10,13 +10,14 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.util.Vector;
 
+import java.util.List;
+
 public class PlayerInteractListener implements Listener {
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
-        ConfigurationSection padSection = EssentialCommands.getInstance().getConfig().getConfigurationSection("launch-pad.pad");
-
         Player player = event.getPlayer();
+        ConfigurationSection padSection = EssentialCommands.getInstance().getConfig().getConfigurationSection("launch-pad.pad");
         Vector vector = player.getLocation().getDirection().multiply(1).setY(padSection.getInt("velocity-strength"));
 
         if (!padSection.getBoolean("enabled")) return;
@@ -31,6 +32,15 @@ public class PlayerInteractListener implements Listener {
         ConfigurationSection buildSection = EssentialCommands.getInstance().getConfig().getConfigurationSection("build");
         Player player = event.getPlayer();
 
-        if (!buildSection.getStringList("players-building").contains(player.getName())) event.setCancelled(true);
+        if (buildSection.getStringList("players-building").contains(player.getUniqueId().toString())) event.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onPlayerInteractWhileInJail(PlayerInteractEvent event) {
+        Player player = event.getPlayer();
+        ConfigurationSection jailSection = EssentialCommands.getInstance().getConfig().getConfigurationSection("jail");
+        List<String> jailedPlayers = jailSection.getStringList("players");
+
+        if (jailedPlayers.contains(player.getUniqueId().toString())) event.setCancelled(true);
     }
 }

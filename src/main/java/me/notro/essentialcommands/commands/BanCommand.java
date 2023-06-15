@@ -56,7 +56,7 @@ public class BanCommand implements CommandExecutor {
         punishmentSection.set("reason", reason.toString());
 
         EssentialCommands.getInstance().saveConfig();
-        sender.sendMessage(MessageUtility.fixColor("&7(Silent) &3" + sender.getName() + " &3banned &3" + target.getName() + "&7."));
+        sender.sendMessage(MessageUtility.fixColor("&7(Silent) &3" + sender.getName() + " &bbanned &3" + target.getName() + "&7."));
         return true;
     }
 }

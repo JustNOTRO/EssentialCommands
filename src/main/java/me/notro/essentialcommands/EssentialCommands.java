@@ -63,7 +63,6 @@ public final class EssentialCommands extends JavaPlugin {
         getCommand("summon").setExecutor(new SummonCommand());
         getCommand("smite").setExecutor(new SmiteCommand());
         getCommand("sign").setExecutor(new SignCommand());
-        getCommand("nick").setExecutor(new NickCommand());
         getCommand("kill").setExecutor(new KillCommand());
         getCommand("broadcast").setExecutor(new BroadcastCommand());
         getCommand("troll").setExecutor(new TrollCommand());
@@ -90,6 +89,12 @@ public final class EssentialCommands extends JavaPlugin {
         getCommand("giveall").setExecutor(new GiveallCommand());
         getCommand("socialmedia").setExecutor(new SocialMediaCommand());
         getCommand("socialspy").setExecutor(new SocialSpyCommand());
+        getCommand("playsound").setExecutor(new PlaySoundCommand());
+        getCommand("motd").setExecutor(new MotdCommand());
+        getCommand("pvp").setExecutor(new PvPCommand());
+        getCommand("stafflist").setExecutor(new StaffListCommand());
+        getCommand("clearlag").setExecutor(new ClearLagCommand());
+        getCommand("gravity").setExecutor(new GravityCommand());
 
 
         //Spigot Listeners
@@ -108,6 +113,8 @@ public final class EssentialCommands extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerFishListener(), this);
         getServer().getPluginManager().registerEvents(new EntityPickupItemListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerCommandPreprocessListener(), this);
+        getServer().getPluginManager().registerEvents(new ServerListPingListener(), this);
+        getServer().getPluginManager().registerEvents(new EntityDamageByEntityListener(), this);
     }
 
     @Override

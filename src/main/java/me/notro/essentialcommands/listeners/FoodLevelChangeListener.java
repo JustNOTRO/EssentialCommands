@@ -11,7 +11,7 @@ public class FoodLevelChangeListener implements Listener {
 
     @EventHandler
     public void onPlayerHungerDeplete(FoodLevelChangeEvent event) {
-        ConfigurationSection godModeSection = EssentialCommands.getInstance().getConfig().getConfigurationSection("god");
+        ConfigurationSection godModeSection = EssentialCommands.getInstance().getConfig().getConfigurationSection("god-mode");
         Entity entity = event.getEntity();
 
         if (!godModeSection.getStringList("players").contains(entity.getName())) return;

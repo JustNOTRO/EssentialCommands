@@ -1,6 +1,6 @@
 package me.notro.essentialcommands.commands;
 
-import me.notro.essentialcommands.systems.HologramManager;
+import me.notro.essentialcommands.managers.HologramManager;
 import me.notro.essentialcommands.utils.MessageUtility;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;

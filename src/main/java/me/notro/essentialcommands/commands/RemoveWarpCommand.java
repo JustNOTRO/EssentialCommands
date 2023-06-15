@@ -1,7 +1,7 @@
 package me.notro.essentialcommands.commands;
 
 import me.notro.essentialcommands.EssentialCommands;
-import me.notro.essentialcommands.systems.WarpManager;
+import me.notro.essentialcommands.managers.WarpManager;
 import me.notro.essentialcommands.utils.MessageUtility;
 import me.notro.essentialcommands.warp.Warp;
 import org.bukkit.command.Command;

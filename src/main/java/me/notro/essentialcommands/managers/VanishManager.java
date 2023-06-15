@@ -1,4 +1,4 @@
-package me.notro.essentialcommands.systems;
+package me.notro.essentialcommands.managers;
 
 import me.notro.essentialcommands.EssentialCommands;
 import org.bukkit.Bukkit;

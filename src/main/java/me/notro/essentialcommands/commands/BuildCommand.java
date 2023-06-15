@@ -36,17 +36,17 @@ public class BuildCommand implements CommandExecutor, TabCompleter {
         List<String> playersBuilding = buildSection.getStringList("players-building");
 
         switch (args[0].toLowerCase()) {
-            case "enable" -> {
-                playersBuilding.remove(player.getName());
+            case "disable" -> {
+                playersBuilding.add(player.getUniqueId().toString());
                 buildSection.set("players-building", playersBuilding);
-                player.sendMessage(MessageUtility.fixColor("&7(Silent) &bBuild has been &3enabled&7."));
+                player.sendMessage(MessageUtility.fixColor("&7(Silent) &bBuild has been &3disabled&7."));
                 EssentialCommands.getInstance().saveConfig();
             }
 
-            case "disable" -> {
-                playersBuilding.add(player.getName());
+            case "enable" -> {
+                playersBuilding.remove(player.getUniqueId().toString());
                 buildSection.set("players-building", playersBuilding);
-                player.sendMessage(MessageUtility.fixColor("&7(Silent) &bBuild has been &3disabled&7."));
+                player.sendMessage(MessageUtility.fixColor("&7(Silent) &bBuild has been &3enabled&7."));
                 EssentialCommands.getInstance().saveConfig();
             }
 

@@ -1,9 +1,9 @@
 package me.notro.essentialcommands.listeners;
 
 import me.notro.essentialcommands.EssentialCommands;
-import me.notro.essentialcommands.models.ItemBuilder;
-import me.notro.essentialcommands.systems.ScoreboardManager;
-import me.notro.essentialcommands.systems.VanishManager;
+import me.notro.essentialcommands.utils.ItemBuilder;
+import me.notro.essentialcommands.managers.ScoreboardManager;
+import me.notro.essentialcommands.managers.VanishManager;
 import me.notro.essentialcommands.utils.MessageUtility;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -14,12 +14,18 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.scoreboard.*;
 
+import java.util.List;
+
 public class PlayerJoinListener implements Listener {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
+        ConfigurationSection spawnSection = EssentialCommands.getInstance().getConfig().getConfigurationSection("spawn");
         ConfigurationSection vanishSection = EssentialCommands.getInstance().getConfig().getConfigurationSection("vanish-mode");
+        ConfigurationSection jailSection = EssentialCommands.getInstance().getConfig().getConfigurationSection("jail");
+
+        List<String> jailedPlayers = jailSection.getStringList("players");
         VanishManager vanishManager = new VanishManager(player, vanishSection, vanishSection.getStringList("players-vanished"));
 
         if (vanishManager.isVanished()) {
@@ -28,23 +34,18 @@ public class PlayerJoinListener implements Listener {
             return;
         }
 
-        if (EssentialCommands.getInstance().getConfig().getLocation("spawn") == null) return;
-        player.teleport(EssentialCommands.getInstance().getConfig().getLocation("spawn"));
-
         event.setJoinMessage(MessageUtility.fixColor("&7[&a+&7] ") + player.getName());
+
+        if (jailedPlayers.contains(player.getUniqueId().toString())) {
+            Bukkit.getServer().broadcast(MessageUtility.fixColor("&3" + player.getName() + " &bJoined while in jail&7."), "essentials.staff.notify");
+            player.teleport(jailSection.getLocation("location"));
+            return;
+        }
+
+        if (spawnSection.getLocation("location") == null) return;
+
+        player.teleport(spawnSection.getLocation("location"));
         player.setAllowFlight(true);
-    }
-
-    @EventHandler
-    public void onPlayerJoinWhileVanished(PlayerJoinEvent event) {
-        ConfigurationSection vanishSection = EssentialCommands.getInstance().getConfig().getConfigurationSection("vanish-mode");
-        Player player = event.getPlayer();
-        VanishManager vanishManager = new VanishManager(player, vanishSection, vanishSection.getStringList("players-vanished"));
-
-        Bukkit.getOnlinePlayers()
-                .stream()
-                .filter(players -> vanishManager.isVanished())
-                .forEach(players -> players.hidePlayer(EssentialCommands.getInstance(), player));
     }
 
     @EventHandler
