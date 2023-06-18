@@ -44,12 +44,13 @@ public class BanCommand implements CommandExecutor {
         List<String> list = punishmentSection.getStringList("players");
         list.add(target.getUniqueId().toString());
         BanList banList = sender.getServer().getBanList(BanList.Type.NAME);
-        banList.addBan(String.valueOf(target.getUniqueId()), reason.toString(), null, null);
 
-        if (banList.isBanned(target.getName())) {
+        if (banList.isBanned(target.getUniqueId().toString())) {
             sender.sendMessage(MessageUtility.fixColor("&3" + target.getName() + " &cis already banned&7."));
             return false;
         }
+
+        banList.addBan(String.valueOf(target.getUniqueId()), reason.toString(), null, null);
 
         punishmentSection.set("players", list);
         punishmentSection.set("message", message);

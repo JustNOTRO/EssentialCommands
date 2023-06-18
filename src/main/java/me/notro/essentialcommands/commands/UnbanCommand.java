@@ -30,7 +30,7 @@ public class UnbanCommand implements CommandExecutor {
 
         BanList banList = sender.getServer().getBanList(BanList.Type.NAME);
 
-        if (!banList.isBanned(target.getName())) {
+        if (!banList.isBanned(target.getUniqueId().toString())) {
             sender.sendMessage(MessageUtility.fixColor("&3" + target.getName() + " &cis not banned&7."));
             return false;
         }
