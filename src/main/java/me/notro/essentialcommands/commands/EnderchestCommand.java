@@ -1,15 +1,13 @@
 package me.notro.essentialcommands.commands;
 
-import me.notro.essentialcommands.EssentialCommands;
 import me.notro.essentialcommands.utils.MessageUtility;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
-public class NukeCommand implements CommandExecutor {
+public class EnderchestCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -19,30 +17,26 @@ public class NukeCommand implements CommandExecutor {
             return false;
         }
 
-        if (!player.hasPermission("essentials.nuke")) {
-            player.sendMessage(MessageUtility.fixColor(MessageUtility.NO_PERMISSION.toString()));
+        if (!player.hasPermission("essentials.enderchest")) {
+            player.sendMessage(MessageUtility.fixColor(MessageUtility.NO_PERMISSION.getDefaultMessage()));
             return false;
         }
 
-        if (args.length < 2) {
-            player.sendMessage(MessageUtility.fixColor("&7(Silent) &cUsage&7: &b/nuke <player> <amount>"));
+        if (args.length < 1) {
+            player.sendMessage(MessageUtility.fixColor("&cUsage&7: &b/enderchest <player>"));
             return false;
         }
 
         Player target = Bukkit.getPlayer(args[0]);
-        int amount = Integer.parseInt(args[1]);
 
         if (target == null) {
             player.sendMessage(MessageUtility.fixColor(MessageUtility.NO_PLAYER_EXISTENCE.getDefaultMessage()));
             return false;
         }
 
-        for (int i = 0; i < amount; i++)
-            player.getWorld()
-                    .spawnEntity(player.getLocation()
-                            .add(0, 5, 0), EntityType.PRIMED_TNT)
-                    .setMetadata("primedtnt", EssentialCommands.MetadataValues.blocksBreakMetaData(true));
 
+        target.openInventory(target.getEnderChest());
+        player.sendMessage(MessageUtility.fixColor("&bOpened &3" + target.getName() + "'s enderchest&7."));
         return true;
     }
 }

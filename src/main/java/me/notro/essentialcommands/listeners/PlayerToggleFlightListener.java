@@ -14,7 +14,6 @@ public class PlayerToggleFlightListener implements Listener {
         Player player = event.getPlayer();
 
         if (player.getGameMode().equals(GameMode.CREATIVE) || player.getGameMode().equals(GameMode.SPECTATOR)) return;
-        if (player.hasPermission("essentials.doublejump.bypass")) return;
 
         event.setCancelled(true);
         player.setAllowFlight(false);

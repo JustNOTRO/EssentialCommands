@@ -35,8 +35,8 @@ public class EffectCommand implements CommandExecutor, TabCompleter {
 
         switch (args[0].toLowerCase()) {
             case "give" -> {
-                if (args.length < 5) {
-                    player.sendMessage(MessageUtility.fixColor("&7(Silent) &cUsage&7: &b/effect <give/clear> <player> <effectType> <duration> <amplifier>"));
+                if (args.length < 4) {
+                    player.sendMessage(MessageUtility.fixColor("&7(Silent) &cUsage&7: &b/effect <give/clear> <player> <effectType> <duration>"));
                     return false;
                 }
 
@@ -56,12 +56,12 @@ public class EffectCommand implements CommandExecutor, TabCompleter {
 
                 try {
                     int duration = Integer.parseInt(args[3]);
-                    int amplifier = Integer.parseInt(args[4]);
-                    target.addPotionEffect(new PotionEffect(potionEffectType, duration, amplifier));
+                    target.addPotionEffect(new PotionEffect(potionEffectType, duration * 20, 1));
                 } catch (NumberFormatException exception) {
                     sender.sendMessage(MessageUtility.fixColor("&7(Silent) &8>> &cDuration and amplifier needs to be numeric&7."));
                     return false;
                 }
+
                 player.sendMessage(MessageUtility.fixColor("&7(Silent) &bAdded &3" + target.getName() + "&b " + potionEffectType.getName().toLowerCase() + "&7."));
             }
 

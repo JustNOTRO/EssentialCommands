@@ -22,6 +22,11 @@ public class FeedCommand implements CommandExecutor {
             return false;
         }
 
+        if (args.length > 0) {
+            player.sendMessage(MessageUtility.fixColor("&cUsage&7: &b/feed"));
+            return false;
+        }
+
         if (player.getFoodLevel() == 20.0) {
             player.sendMessage(MessageUtility.fixColor("&7(Silent) &cYou are already full hunger level&7."));
             return false;

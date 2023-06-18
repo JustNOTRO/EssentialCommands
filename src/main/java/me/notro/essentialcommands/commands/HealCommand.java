@@ -21,12 +21,17 @@ public class HealCommand implements CommandExecutor {
             return false;
         }
 
-        if (player.getHealth() == 20) {
+        if (args.length > 0) {
+            player.sendMessage(MessageUtility.fixColor("&cUsage&7: &b/heal"));
+            return false;
+        }
+
+        if (player.getHealth() == 20.0D) {
             player.sendMessage(MessageUtility.fixColor("&7(Silent) &cYou are already full health&7."));
             return false;
         }
 
-        player.setHealth(20.0);
+        player.setHealth(20.0D);
         player.sendMessage(MessageUtility.fixColor("&7(Silent) &bYou have been &3Healed&7."));
         return true;
     }

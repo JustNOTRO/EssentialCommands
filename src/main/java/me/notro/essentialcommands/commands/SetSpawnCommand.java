@@ -23,15 +23,16 @@ public class SetSpawnCommand implements CommandExecutor {
             return false;
         }
 
-        if (args.length == 0) {
-            player.sendMessage(MessageUtility.fixColor(MessageUtility.NO_ARGUMENTS_PROVIDED.getDefaultMessage()));
+        if (args.length > 0) {
+            player.sendMessage(MessageUtility.fixColor("&cUsage&7: &b/setspawn"));
             return false;
         }
 
         ConfigurationSection spawnSection = EssentialCommands.getInstance().getConfig().getConfigurationSection("spawn");
         spawnSection.set("location", player.getLocation());
-        EssentialCommands.getInstance().saveConfig();
+
         player.sendMessage(MessageUtility.fixColor("&aSpawn has been set&7."));
+        EssentialCommands.getInstance().saveConfig();
         return true;
     }
 }

@@ -1,14 +1,14 @@
 package me.notro.essentialcommands.commands;
 
-import me.notro.essentialcommands.EssentialCommands;
 import me.notro.essentialcommands.utils.MessageUtility;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
-public class SpawnCommand implements CommandExecutor {
+public class StackCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -18,20 +18,20 @@ public class SpawnCommand implements CommandExecutor {
             return false;
         }
 
-        if (!player.hasPermission("essentials.spawn")) {
+        if (!player.hasPermission("essentials.stack")) {
             player.sendMessage(MessageUtility.fixColor(MessageUtility.NO_PERMISSION.getDefaultMessage()));
             return false;
         }
 
-        ConfigurationSection spawnSection = EssentialCommands.getInstance().getConfig().getConfigurationSection("spawn");
+        ItemStack itemStack = player.getInventory().getItemInMainHand();
 
-        if (spawnSection.getLocation("location") == null) {
-            player.sendMessage(MessageUtility.fixColor("&cSpawn does not exist&7."));
+        if (itemStack.getType() == Material.AIR) {
+            player.sendMessage(MessageUtility.fixColor("&cYou can't stack an air dummy&7."));
             return false;
         }
 
-        player.teleport(spawnSection.getLocation("location"));
-        player.sendMessage(MessageUtility.fixColor("&7(Silent) &bTeleported to the &3Spawn&7."));
+        itemStack.setAmount(64);
+        player.sendMessage(MessageUtility.fixColor("&7(Silent) Successfully stacked &3" + itemStack.getType() + "&7."));
         return true;
     }
 }

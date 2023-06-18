@@ -247,3 +247,87 @@ commands:
 
   gravity:
     description: Set a player gravity to true/false.
+
+  healall:
+    description: Heal all online players.
+
+  feedall:
+    description: Feed all online players.
+
+  trash:
+    description: Open's a trash bin to clean items.
+
+  head:
+    aliases: skull
+    description: Get a player's head.
+
+  clearchat:
+    aliases: cc
+    description: Clears chat history.
+
+  seen:
+    description: Check when a player last played.
+
+  save:
+    description: Saves the specified world.
+
+  oplist:
+    description: Presents all the op players.
+
+  difficulty:
+    description: Set server difficulty.
+
+  enderchest:
+    aliases: echest
+    description: Open a player's enderchest.
+
+  speedall:
+    description: Speed all online players.
+
+  deletespawn:
+    description: Delete the server current spawn point.
+
+  send:
+    description: Send a player to a specified world.
+
+  fart:
+    description: Makes a player fart.
+
+  seed:
+    description: Display world seed.
+
+  stack:
+    description: Set your current item amount to 64.
+
+  smiteall:
+    description: Smite all online players.
+
+  explode:
+    description: Explode a certain player.
+
+  clearall:
+    description: Clear all online players inventory.
+
+  powertool:
+    aliases: pt
+    description: Set your held item an action.
+
+  minefast:
+    aliases: mf
+    description: Set a player fast digging for a certain duration.
+
+  fakejoin:
+    aliases: fj
+    description: Send a fake join message to troll all online players.
+
+  find:
+    description: Find a player.
+
+  casino:
+    description: Try your luck with getting cool stuff using casino.
+
+  fakequit:
+    description: Send a fake quit message to troll all online players.
+
+  credits:
+    description: Presents the plugin author & credit.

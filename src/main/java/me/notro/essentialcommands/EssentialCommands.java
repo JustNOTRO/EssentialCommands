@@ -86,7 +86,7 @@ public final class EssentialCommands extends JavaPlugin {
         getCommand("setjail").setExecutor(new SetJailCommand());
         getCommand("jail").setExecutor(new JailCommand());
         getCommand("rules").setExecutor(new RulesCommand());
-        getCommand("giveall").setExecutor(new GiveallCommand());
+        getCommand("giveall").setExecutor(new GiveAllCommand());
         getCommand("socialmedia").setExecutor(new SocialMediaCommand());
         getCommand("socialspy").setExecutor(new SocialSpyCommand());
         getCommand("playsound").setExecutor(new PlaySoundCommand());
@@ -95,6 +95,32 @@ public final class EssentialCommands extends JavaPlugin {
         getCommand("stafflist").setExecutor(new StaffListCommand());
         getCommand("clearlag").setExecutor(new ClearLagCommand());
         getCommand("gravity").setExecutor(new GravityCommand());
+        getCommand("healall").setExecutor(new HealAllCommand());
+        getCommand("feedall").setExecutor(new FeedAllCommand());
+        getCommand("trash").setExecutor(new TrashCommand());
+        getCommand("head").setExecutor(new HeadCommand());
+        getCommand("clearchat").setExecutor(new ClearChatCommand());
+        getCommand("seen").setExecutor(new SeenCommand());
+        getCommand("save").setExecutor(new SaveWorldCommand());
+        getCommand("oplist").setExecutor(new OpListCommand());
+        getCommand("difficulty").setExecutor(new DifficultyCommand());
+        getCommand("enderchest").setExecutor(new EnderchestCommand());
+        getCommand("speedall").setExecutor(new SpeedAllCommand());
+        getCommand("deletespawn").setExecutor(new DeleteSpawnCommand());
+        getCommand("send").setExecutor(new SendWorldCommand());
+        getCommand("fart").setExecutor(new FartCommand());
+        getCommand("seed").setExecutor(new SeedCommand());
+        getCommand("stack").setExecutor(new StackCommand());
+        getCommand("smiteall").setExecutor(new SmiteAllCommand());
+        getCommand("explode").setExecutor(new ExplodeCommand());
+        getCommand("clearall").setExecutor(new ClearAllCommand());
+        getCommand("powertool").setExecutor(new PowerToolCommand());
+        getCommand("minefast").setExecutor(new FastMineCommand());
+        getCommand("fakejoin").setExecutor(new FakeJoinCommand());
+        getCommand("find").setExecutor(new FindCommand());
+        getCommand("casino").setExecutor(new CasinoCommand());
+        getCommand("fakequit").setExecutor(new FakeQuitCommand());
+        getCommand("credits").setExecutor(new CreditsCommand());
 
 
         //Spigot Listeners
@@ -123,7 +149,7 @@ public final class EssentialCommands extends JavaPlugin {
         getLogger().info("has been Disabled.");
     }
 
-    public static class MetadataValues {
+    public class MetadataValues {
         public static FixedMetadataValue blocksBreakMetaData(boolean state) {
             return new FixedMetadataValue(instance, state);
         }

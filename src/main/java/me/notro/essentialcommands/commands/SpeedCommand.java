@@ -30,8 +30,7 @@ public class SpeedCommand implements CommandExecutor {
 
         try {
             speed = Integer.parseInt(args[0]);
-
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException exception) {
             player.sendMessage(MessageUtility.fixColor("&7(Silent) &cInvalid speed level&7."));
             return false;
         }

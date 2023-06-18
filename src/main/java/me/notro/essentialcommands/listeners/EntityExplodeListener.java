@@ -9,9 +9,10 @@ public class EntityExplodeListener implements Listener {
 
     @EventHandler
     public void onBlockExplode(EntityExplodeEvent event) {
-        TNTPrimed tntPrimed = (TNTPrimed) event.getEntity();
 
-        if (!tntPrimed.hasMetadata("tntprimed")) return;
+        if (!(event.getEntity() instanceof TNTPrimed tntPrimed)) return;
+        if (tntPrimed.hasMetadata("primedtnt")) return;
+
         event.setCancelled(true);
     }
 }

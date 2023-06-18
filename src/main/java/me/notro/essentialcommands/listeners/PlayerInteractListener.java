@@ -8,6 +8,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
 import java.util.List;
@@ -42,5 +43,18 @@ public class PlayerInteractListener implements Listener {
         List<String> jailedPlayers = jailSection.getStringList("players");
 
         if (jailedPlayers.contains(player.getUniqueId().toString())) event.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onPlayerPowerToolInteract(PlayerInteractEvent event) {
+        Player player = event.getPlayer();
+        ItemStack itemStack = event.getItem();
+
+        if (itemStack == null || !itemStack.hasItemMeta() || !itemStack.getItemMeta().hasDisplayName()) return;
+        if (!event.getAction().name().contains("RIGHT_CLICK")) return;
+
+        String powertoolCommand = itemStack.getItemMeta().getDisplayName();
+        player.performCommand(powertoolCommand);
+        event.setCancelled(true);
     }
 }

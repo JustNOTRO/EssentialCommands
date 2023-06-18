@@ -6,32 +6,32 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.entity.Player;
 
-public class SpawnCommand implements CommandExecutor {
+public class DeleteSpawnCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-        if (!(sender instanceof Player player)) {
-            sender.sendMessage(MessageUtility.fixColor(MessageUtility.NO_SENDER_EXECUTOR.getDefaultMessage()));
+        if (!sender.hasPermission("essentials.delete.spawn")) {
+            sender.sendMessage(MessageUtility.fixColor(MessageUtility.NO_PERMISSION.getDefaultMessage()));
             return false;
         }
 
-        if (!player.hasPermission("essentials.spawn")) {
-            player.sendMessage(MessageUtility.fixColor(MessageUtility.NO_PERMISSION.getDefaultMessage()));
+        if (args.length > 0) {
+            sender.sendMessage(MessageUtility.fixColor("&cUsage&7: &b/deletespawn"));
             return false;
         }
 
         ConfigurationSection spawnSection = EssentialCommands.getInstance().getConfig().getConfigurationSection("spawn");
 
         if (spawnSection.getLocation("location") == null) {
-            player.sendMessage(MessageUtility.fixColor("&cSpawn does not exist&7."));
+            sender.sendMessage(MessageUtility.fixColor("&cSpawn location does not exist&7."));
             return false;
         }
 
-        player.teleport(spawnSection.getLocation("location"));
-        player.sendMessage(MessageUtility.fixColor("&7(Silent) &bTeleported to the &3Spawn&7."));
+        spawnSection.set("location", null);
+        sender.sendMessage(MessageUtility.fixColor("&aSpawn location has been successfully deleted&7."));
+        EssentialCommands.getInstance().saveConfig();
         return true;
     }
 }
